@@ -4,4 +4,10 @@
   <artifactId>Caveat-Emptor</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <modules>
+  	<module>Caveat-Emptor-business</module>
+  	<module>Caveat-Emptor-common</module>
+  	<module>Caveat-Emptor-presentation</module>
+  	<module>Caveat-Emptor-webservices</module>
+  </modules>
 </project>
