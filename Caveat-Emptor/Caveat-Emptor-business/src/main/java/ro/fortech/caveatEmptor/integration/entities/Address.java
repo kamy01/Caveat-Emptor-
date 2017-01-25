@@ -26,6 +26,14 @@ public class Address {
 	@Column(name = AddressFields.CITY)
 	private String city;
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getStreet() {
 		return street;
 	}
