@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="css/signin.css" />
+
+<form class="form-signin" role="form" ng-submit="ctrl.login()">
+	<h2 class="form-signin-heading">Please sign in</h2>
+	<div class="form-group" ng-class="{'has-error' : form.username.$dirty && form.username.$error.required }">
+		<input type="text" id="username" ng-model="ctrl.user.username" class="form-control" placeholder="Name" required autofocus />
+	</div>
+	<div class="form-group" ng-class="{'has-error' : form.password.$dirty && form.password.$error.required }">
+		<input type="password" id="password" ng-model="ctrl.user.password" class="form-control" placeholder="Password" required />
+	</div>
+	<div class="form-actions">
+		<input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign in" ng-disabled="form.$invalid">
+		<a href="#/register" class="btn btn-click">Register</a>
+	</div>
+</form>
