@@ -1,4 +1,4 @@
-package ro.fortech.caveatEmptor.integration.repositories;
+package ro.fortech.caveatEmptor.integration.repositories.users;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import ro.fortech.caveatEmptor.exceptions.UserException;
 import ro.fortech.caveatEmptor.integration.entities.User;
-import ro.fortech.caveatEmptor.integration.entities.fields.UserFields;
+import ro.fortech.caveatEmptor.integration.queries.UserQueries;
 
 @Repository
 public class UserRepository {
@@ -23,18 +23,14 @@ public class UserRepository {
 	private EntityManagerFactory emf;
 
 	public User getUserByUsername(String username, String password) throws Exception {
-		logger.info("<<<START>>> UserRepository.getUserByUsername with params username: " + username
-				+ ", password: ***********");
+		logger.info("<<<START>>> UserRepository.getUserByUsername with params username: " + username + ", password: ***********");
 
 		User user = null;
 
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		try {
-			Query query = em
-					.createQuery("FROM " + User.class.getName() + " WHERE " + UserFields.USER_NAME + " = :username "
-							+ "AND " + UserFields.PASSWORD + " = :password")
-					.setParameter("username", username).setParameter("password", password);
+			Query query = em.createQuery(UserQueries.GET_USER_BY_USERNAME).setParameter("username", username).setParameter("password", password);
 			user = (User) query.getSingleResult();
 		} catch (NoResultException e) {
 			logger.info("No results found");

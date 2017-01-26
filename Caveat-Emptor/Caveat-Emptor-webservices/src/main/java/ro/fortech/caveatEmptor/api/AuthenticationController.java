@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ro.fortech.caveatEmptor.UserService;
+import ro.fortech.caveatEmptor.business.services.UserService;
 import ro.fortech.caveatEmptor.dto.Response;
 import ro.fortech.caveatEmptor.dto.UserDto;
 
