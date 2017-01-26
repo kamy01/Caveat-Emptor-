@@ -47,7 +47,7 @@ public class PersistenceJndiConfig {
 
 	private Properties getHibernateProperties() {
 		Properties props = new Properties();
-		props.put("hibernate.hbm2ddl.auto", "create");
+		// props.put("hibernate.hbm2ddl.auto", "create");
 		props.put("hibernate.show_sql", "true");
 		props.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 		return props;
