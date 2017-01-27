@@ -29,10 +29,15 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = { "application/json" })
-	public @ResponseBody ResponseDto<UserDto> createUser(@RequestBody UserDto userDto) {
-		ResponseDto<UserDto> response = new ResponseDto<>();
-		response.setData(userDto);
-		response.setSuccess(true);
+	public @ResponseBody ResponseDto<Integer> createUser(@RequestBody UserDto userDto) {
+		ResponseDto<Integer> response = new ResponseDto<>();
+		try {
+			response.setData(userService.createUser(userDto));
+			response.setSuccess(true);
+		} catch (Exception e) {
+			response.setSuccess(false);
+			response.setMessage(e.getMessage());
+		}
 		return response;
 	}
 

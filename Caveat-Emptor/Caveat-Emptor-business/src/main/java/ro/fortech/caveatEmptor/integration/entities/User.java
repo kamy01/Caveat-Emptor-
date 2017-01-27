@@ -23,16 +23,16 @@ public class User {
 	@Column(name = UserFields.USER_ID, unique = true, nullable = false, updatable = false)
 	private Integer id;
 
-	@Column(name = UserFields.FIRST_NAME)
+	@Column(name = UserFields.FIRST_NAME, nullable = false)
 	private String firstName;
 
-	@Column(name = UserFields.LAST_NAME)
+	@Column(name = UserFields.LAST_NAME, nullable = false)
 	private String lastName;
 
 	@Column(name = UserFields.USER_NAME, unique = true, nullable = false, updatable = false)
 	private String username;
 
-	@Column(name = UserFields.PASSWORD)
+	@Column(name = UserFields.PASSWORD, nullable = false)
 	private String password;
 
 	@Column(name = UserFields.EMAIL, unique = true, nullable = false)

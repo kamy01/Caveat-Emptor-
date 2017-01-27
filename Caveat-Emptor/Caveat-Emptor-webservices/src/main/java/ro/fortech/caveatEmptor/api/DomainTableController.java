@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ro.fortech.caveatEmptor.business.services.DomainTableService;
 
 @Controller
-@RequestMapping("/ws")
+@RequestMapping("/ws/domainTable")
 public class DomainTableController {
 
 	@Autowired
 	private DomainTableService domainTableService;
 
-	@RequestMapping(value = "/domainTable", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody Map<String, List<String>> geDomainTables() {
 		return new HashMap<>();
 	}
