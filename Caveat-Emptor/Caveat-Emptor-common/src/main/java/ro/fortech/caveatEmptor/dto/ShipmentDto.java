@@ -5,10 +5,8 @@ import java.sql.Date;
 
 public class ShipmentDto implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1556648722990094125L;
+
 	private Integer id;
 	private String state;
 	private Date creationDate;

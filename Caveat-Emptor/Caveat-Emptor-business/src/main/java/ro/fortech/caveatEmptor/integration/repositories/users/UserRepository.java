@@ -24,7 +24,7 @@ public class UserRepository {
 
 	public User getUserByUsername(String username, String password) throws Exception {
 		logger.info("<<<START>>> UserRepository.getUserByUsername with params username: " + username + ", password: ***********");
-
+		
 		User user = null;
 
 		EntityManager em = emf.createEntityManager();

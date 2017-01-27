@@ -6,10 +6,8 @@ import java.util.List;
 
 public class UserDto implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6241298386176174535L;
+
 	private Integer id;
 	private String firstName;
 	private String lastName;

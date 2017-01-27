@@ -4,10 +4,8 @@ import java.io.Serializable;
 
 public class DomainTableDto implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1977103114951877849L;
+
 	private String domainCod;
 	private String value;
 	private boolean isActive;

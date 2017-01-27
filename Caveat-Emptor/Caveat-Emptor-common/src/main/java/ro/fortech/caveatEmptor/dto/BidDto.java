@@ -6,9 +6,6 @@ import java.sql.Date;
 
 public class BidDto implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1646430613271566662L;
 
 	private Integer id;

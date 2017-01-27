@@ -5,10 +5,8 @@ import java.sql.Date;
 
 public class CommentDto implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3352649760868920077L;
+
 	private Integer id;
 	private String rating;
 	private String text;

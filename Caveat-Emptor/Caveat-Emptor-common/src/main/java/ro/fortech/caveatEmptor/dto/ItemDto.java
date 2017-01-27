@@ -9,10 +9,8 @@ import java.util.List;
 
 public class ItemDto implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3872505178938025498L;
+
 	private Integer id;
 	private String name;
 	private String description;

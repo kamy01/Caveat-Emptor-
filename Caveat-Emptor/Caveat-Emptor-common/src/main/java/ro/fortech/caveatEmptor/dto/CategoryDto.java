@@ -6,9 +6,6 @@ import java.util.List;
 
 public class CategoryDto implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2214525257891163483L;
 
 	private Integer id;

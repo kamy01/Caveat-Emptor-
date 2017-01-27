@@ -1,15 +1,19 @@
 package ro.fortech.caveatEmptor.dto;
 
-public class Response<T> {
+import java.io.Serializable;
+
+public class ResponseDto<T> implements Serializable {
+
+	private static final long serialVersionUID = -3613109978315796957L;
 
 	private T data;
 	private boolean success;
 	private String message;
 
-	public Response() {
+	public ResponseDto() {
 	}
 
-	public Response(T data) {
+	public ResponseDto(T data) {
 		this.data = data;
 	}
 

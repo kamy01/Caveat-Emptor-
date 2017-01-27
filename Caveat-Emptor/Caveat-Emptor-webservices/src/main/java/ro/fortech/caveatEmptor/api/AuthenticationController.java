@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ro.fortech.caveatEmptor.business.services.UserService;
-import ro.fortech.caveatEmptor.dto.Response;
+import ro.fortech.caveatEmptor.dto.ResponseDto;
 import ro.fortech.caveatEmptor.dto.UserDto;
 
 @Controller
@@ -19,9 +19,9 @@ public class AuthenticationController {
 	private UserService userService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST, consumes = { "application/json" })
-	public @ResponseBody Response<UserDto> authenticate(@RequestBody UserDto user) {
+	public @ResponseBody ResponseDto<UserDto> authenticate(@RequestBody UserDto user) {
 		System.out.println(user.getUsername());
-		Response<UserDto> response = new Response<>();
+		ResponseDto<UserDto> response = new ResponseDto<>();
 		try {
 			response.setSuccess(userService.isUser(user));
 		} catch (Exception e) {
