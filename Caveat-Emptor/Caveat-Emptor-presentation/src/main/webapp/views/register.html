@@ -8,11 +8,11 @@
 	<div class="form-group" ng-class="{'has-error' : form.lastName.$dirty && form.lastName.$error.required }">
 		<input type="text" id="lastName" ng-model="ctrl.user.lastName" class="form-control" placeholder="Last name" required />
 	</div>
-	<div class="form-group" ng-class="{'has-error' : form.emailAddress.$dirty && form.emailAddress.$error.required }">
-		<input type="text" id="emailAddress" ng-model="ctrl.user.emailAddress" class="form-control" placeholder="Last name" required />
-	</div>
 	<div class="form-group" ng-class="{'has-error' : form.username.$dirty && form.username.$error.required }">
-		<input type="text" id="username" ng-model="ctrl.user.username" class="form-control" placeholder="Last name" required />
+		<input type="text" id="username" ng-model="ctrl.user.username" class="form-control" placeholder="Username" required />
+	</div>
+	<div class="form-group" ng-class="{'has-error' : form.emailAddress.$dirty && form.emailAddress.$error.required }">
+		<input type="text" id="emailAddress" ng-model="ctrl.user.email" class="form-control" placeholder="Email" required />
 	</div>
 	<div class="form-group" ng-class="{'has-error' : form.password.$dirty && form.password.$error.required }">
 		<input type="password" id="password" ng-model="ctrl.user.password" class="form-control" placeholder="Password" required />

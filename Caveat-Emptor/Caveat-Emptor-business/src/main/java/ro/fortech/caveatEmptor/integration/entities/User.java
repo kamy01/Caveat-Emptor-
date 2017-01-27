@@ -29,13 +29,13 @@ public class User {
 	@Column(name = UserFields.LAST_NAME)
 	private String lastName;
 
-	@Column(name = UserFields.USER_NAME)
-	private String userName;
+	@Column(name = UserFields.USER_NAME, unique = true, nullable = false, updatable = false)
+	private String username;
 
 	@Column(name = UserFields.PASSWORD)
 	private String password;
 
-	@Column(name = UserFields.EMAIL)
+	@Column(name = UserFields.EMAIL, unique = true, nullable = false)
 	private String email;
 
 	@Column(name = UserFields.RANKING)
@@ -86,12 +86,12 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String userName) {
+		this.username = userName;
 	}
 
 	public String getPassword() {
