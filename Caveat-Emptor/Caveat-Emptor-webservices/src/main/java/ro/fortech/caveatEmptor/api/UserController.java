@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ro.fortech.caveatEmptor.business.services.UserService;
 import ro.fortech.caveatEmptor.dto.ResponseDto;
 import ro.fortech.caveatEmptor.dto.UserDto;
+import ro.fortech.caveatEmptor.utils.ObjectUtils;
 
 @Controller
 @RequestMapping("/ws/users")
@@ -36,7 +37,7 @@ public class UserController {
 			response.setSuccess(true);
 		} catch (Exception e) {
 			response.setSuccess(false);
-			response.setMessage(e.getMessage());
+			response.setMessage(ObjectUtils.capitalizeFirstLetter(e.getMessage()));
 		}
 		return response;
 	}

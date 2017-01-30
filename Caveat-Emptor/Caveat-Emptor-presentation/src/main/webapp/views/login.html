@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="css/signin.css" />
 
-<form class="form-signin" role="form" ng-submit="ctrl.login()">
+<form name="form" class="form-signin" role="form" ng-submit="ctrl.login()">
 	<h2 class="form-signin-heading">Please sign in</h2>
 	<div class="form-group" ng-class="{'has-error' : form.username.$dirty && form.username.$error.required }">
 		<input type="text" id="username" ng-model="ctrl.user.username" class="form-control" placeholder="Name" required autofocus />

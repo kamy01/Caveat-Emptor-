@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 
 import ro.fortech.caveatEmptor.integration.entities.fields.UserFields;
 
@@ -29,12 +32,15 @@ public class User {
 	@Column(name = UserFields.LAST_NAME, nullable = false)
 	private String lastName;
 
+	@Size(min = 3, message = "Username must be at least 3 character!")
 	@Column(name = UserFields.USER_NAME, unique = true, nullable = false, updatable = false)
 	private String username;
 
+	@Size(min = 5, message = "Password must be at least 3 character!")
 	@Column(name = UserFields.PASSWORD, nullable = false)
 	private String password;
 
+	@Email
 	@Column(name = UserFields.EMAIL, unique = true, nullable = false)
 	private String email;
 
