@@ -4,7 +4,6 @@ TreeDirective.$inject = [ '$compile' ];
 function TreeDirective($compile) {
 	return {
 		restrict : 'E',
-        requires: '^^catNav',
 		scope : {
 			items : '='
 		},
@@ -21,7 +20,7 @@ function TreeDirective($compile) {
 				});
 			};
 		},
-		link : function(scope, element, attr, categoriesController) {
+		link : function(scope, element, attr) {
 			scope.parentId = attr.id;
 		}
 	}

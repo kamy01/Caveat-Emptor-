@@ -19,7 +19,11 @@ public class UserService {
 		this.validate(userDto, "login");
 		User user = userRepository.getUserByUsernameAndPassword(userDto);
 
-		return user != null && user.getId() != null;
+		if (user == null || user.getId() == null) {
+			throw new UserException("Provided credentials are not valid!");
+		}
+
+		return true;
 	}
 
 	public Integer createUser(UserDto userDto) throws Exception {
