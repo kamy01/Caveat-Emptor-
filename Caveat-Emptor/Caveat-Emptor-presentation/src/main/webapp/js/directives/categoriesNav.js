@@ -3,7 +3,7 @@ mainApp.directive('catNav', CategoriesNav);
 function CategoriesNav() {
 	return {
 		restrict : 'E',
-		controller : 'categoriesController',
+		controller : 'catNavController',
 		controllerAs : 'ctrl',
 		templateUrl : 'views/templates/categoriesNav.html'
 	}
