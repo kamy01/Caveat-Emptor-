@@ -18,6 +18,26 @@ function config($routeProvider) {
 		templateUrl : 'views/home.html',
 		controller : '',
 		controllerAs : 'ctrl'
+	}).when('/bidding', {
+		templateUrl : 'views/bidding.html',
+		controller : '',
+		controllerAs : 'ctrl'
+	}).when('/items', {
+		templateUrl : 'views/items.html',
+		controller : '',
+		controllerAs : 'ctrl'
+	}).when('/categories', {
+		templateUrl : 'views/categories.html',
+		controller : '',
+		controllerAs : 'ctrl'
+	}).when('/users', {
+		templateUrl : 'views/users.html',
+		controller : '',
+		controllerAs : 'ctrl'
+	}).when('/account', {
+		templateUrl : 'views/account.html',
+		controller : '',
+		controllerAs : 'ctrl'
 	}).otherwise({
 		redirectTo : '/login'
 	})

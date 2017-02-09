@@ -1,5 +1,5 @@
 var CONSTS = {};
-CONSTS.SERVER_URL = 'http://localhost:8080/';
+CONSTS.SERVER_URL = 'http://127.0.0.1:8080/';
 CONSTS.WS_URL = 'Caveat-Emptor-webservices/ws/';
 CONSTS.AUTHENTICATE_URL = 'authenticate';
 CONSTS.USERS_URL = 'users';
