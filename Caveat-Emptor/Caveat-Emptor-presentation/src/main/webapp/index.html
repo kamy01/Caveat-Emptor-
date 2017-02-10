@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html>
 
-<head>    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css"></link>
-    <link rel="stylesheet" href="css/signin.css" />
+<head>
+<!-- Stylesheets -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css"></link>
+<link rel="stylesheet" href="css/signin.css" />
 </head>
-    
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-cookies.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script
+	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+<script
+	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-cookies.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- Main module setup -->
 <script src="js/app.js"></script>
@@ -20,58 +26,62 @@
 <!-- App config -->
 <script src="js/config.js"></script>
 
+<!-- Utilitary setup-->
+<script src="js/utils/Base64.js"></script>
+<script src="js/utils/consts.js"></script>
+
 <!-- Services setup-->
 <script src="js/services/authenticationService.js"></script>
 <script src="js/services/messagingService.js"></script>
 <script src="js/services/userService.js"></script>
+<script src="js/services/categoriesService.js"></script>
 
 <!-- Controllers setup -->
 <script src="js/controllers/navController.js"></script>
-<script src="js/controllers/loginController.js"></script>    
-<script src="js/controllers/registerController.js"></script>    
-
-<!-- Utilitary setup-->
-<script src="js/utils/Base64.js"></script>
-<script src="js/utils/consts.js"></script>
-<script src="js/validators/registerValidator.js"></script>
+<script src="js/controllers/loginController.js"></script>
+<script src="js/controllers/registerController.js"></script>
+<script src="js/controllers/catNavController.js"></script>
+<script src="js/directives/categoriesNav.js"></script>
+<script src="js/directives/tree.js"></script>
 
 <body ng-app="mainApp">
-        
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>                        
-          </button>
-          <a class="navbar-brand" href="#">Logo</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav" ng-controller="navController">
-            <li ng-repeat="link in links">
-                <a href="{{link.url}}">{{link.title}}</a>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#!/login" ng-if="globals.userLoggedIn"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
 
-    <div class="container-fluid text-center">    
-        <div ng-class="{ 'alert': flash, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }" ng-if="message" ng-bind="message.message"></div>
-        <div class="row content" ng-view>
-        </div>
-    </div>
-    
-    
-<!--
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#/">Logo</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav" ng-controller="navController">
+					<li ng-repeat="link in links" ng-if="globals.userLoggedIn"><a
+						href="{{link.url}}">{{link.title}}</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#!/login" ng-if="globals.userLoggedIn"><span
+							class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+		<div
+			ng-class="{ 'alert': flash, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }"
+			ng-if="message" ng-bind="message.message"></div>
+		<div class="row content" ng-view></div>
+	</div>
+
+
+	<!--
     <footer class="container-fluid text-center">
       <p>Footer Text</p>
     </footer>
 -->
-    
+
 </body>
 </html>

@@ -1,0 +1,9 @@
+<div ng-repeat="item in items">
+	<a data-toggle="collapse" data-target="#child{{item.id}}">{{item.name}}</a>
+	<div id="child{{item.id}}" ng-class="{'collapse':true}">
+		<ul ng-if="item.children">
+			<tree items="item.children"></tree>
+		</ul>
+	</div>
+
+</div>
