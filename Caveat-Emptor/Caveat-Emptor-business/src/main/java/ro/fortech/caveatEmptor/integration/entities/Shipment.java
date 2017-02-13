@@ -21,7 +21,7 @@ public class Shipment {
 	@Id
 	@GeneratedValue
 	@Column(name = ShipmentFields.SHIPMENT_ID, unique = true, nullable = false, updatable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = ShipmentFields.STATE)
 	private String state;
@@ -45,11 +45,11 @@ public class Shipment {
 	@JoinColumn(name = AddressFields.ADDRESS_ID)
 	private Address deliveryAddress;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

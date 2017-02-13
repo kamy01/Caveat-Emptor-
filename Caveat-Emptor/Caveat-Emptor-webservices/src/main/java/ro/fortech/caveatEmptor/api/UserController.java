@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
-    public @ResponseBody ResponseDto<UserDto> getUserById(@PathVariable("userId") Integer userId) {
+    public @ResponseBody ResponseDto<UserDto> getUserById(@PathVariable("userId") Long userId) {
 	ResponseDto<UserDto> response = new ResponseDto<>();
 
 	return response;
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{userId}")
-    public @ResponseBody ResponseDto<UserDto> updateUserById(@PathVariable("userId") Integer userId,
+    public @ResponseBody ResponseDto<UserDto> updateUserById(@PathVariable("userId") Long userId,
 	    @RequestBody UserDto userDto) {
 	ResponseDto<UserDto> response = new ResponseDto<>();
 
@@ -59,8 +59,8 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = { "application/json" })
-    public @ResponseBody ResponseDto<Integer> createUser(@RequestBody UserDto userDto) {
-	ResponseDto<Integer> response = new ResponseDto<>();
+    public @ResponseBody ResponseDto<Long> createUser(@RequestBody UserDto userDto) {
+	ResponseDto<Long> response = new ResponseDto<>();
 	try {
 	    response.setData(userService.createUser(userDto));
 	    response.setSuccess(true);

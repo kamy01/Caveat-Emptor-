@@ -8,16 +8,16 @@ public class CategoryDto implements Serializable {
 
 	private static final long serialVersionUID = -2214525257891163483L;
 
-	private Integer id;
+	private Long id;
 	private String name;
-	private Integer parentId;
+	private Long parentId;
 	private List<CategoryDto> children = new ArrayList<>();
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -29,11 +29,11 @@ public class CategoryDto implements Serializable {
 		this.name = name;
 	}
 
-	public Integer getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(Integer parent) {
+	public void setParentId(Long parent) {
 		this.parentId = parent;
 	}
 

@@ -8,17 +8,17 @@ public class BidDto implements Serializable {
 
 	private static final long serialVersionUID = 1646430613271566662L;
 
-	private Integer id;
+	private Long id;
 	private BigDecimal amount;
 	private Date creationDate;
 	private UserDto bidder;
 	private ItemDto item;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

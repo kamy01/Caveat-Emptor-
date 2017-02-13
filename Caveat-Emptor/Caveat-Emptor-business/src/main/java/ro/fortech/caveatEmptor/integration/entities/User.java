@@ -24,7 +24,7 @@ public class User {
 	@Id
 	@GeneratedValue
 	@Column(name = UserFields.USER_ID, unique = true, nullable = false, updatable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = UserFields.FIRST_NAME, nullable = false)
 	private String firstName;
@@ -45,7 +45,7 @@ public class User {
 	private String email;
 
 	@Column(name = UserFields.RANKING)
-	private Integer ranking;
+	private Long ranking;
 
 	@Column(name = UserFields.IS_ADMIN)
 	private boolean isAdmin;
@@ -68,11 +68,11 @@ public class User {
 	@ManyToMany(mappedBy = "buyers")
 	private List<Item> itemsBought = new ArrayList<>();
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -116,11 +116,11 @@ public class User {
 		this.email = email;
 	}
 
-	public Integer getRanking() {
+	public Long getRanking() {
 		return ranking;
 	}
 
-	public void setRanking(Integer ranking) {
+	public void setRanking(Long ranking) {
 		this.ranking = ranking;
 	}
 

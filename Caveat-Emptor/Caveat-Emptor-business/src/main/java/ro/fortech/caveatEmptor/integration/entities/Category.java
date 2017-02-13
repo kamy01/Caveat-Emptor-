@@ -24,7 +24,7 @@ public class Category {
 	@Id
 	@Column(name = CategoryFields.CATEGORY_ID, unique = true, nullable = false, updatable = false)
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 
 	@Column(name = CategoryFields.NAME)
 	private String name;
@@ -39,11 +39,11 @@ public class Category {
 	@ManyToMany(mappedBy = "categories")
 	private List<Item> items = new ArrayList<>();
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

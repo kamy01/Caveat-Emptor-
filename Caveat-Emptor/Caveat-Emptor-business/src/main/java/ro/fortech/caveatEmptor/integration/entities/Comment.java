@@ -21,7 +21,7 @@ public class Comment {
 	@Id
 	@GeneratedValue
 	@Column(name = CommentFields.COMMENT_ID, unique = true, nullable = false, updatable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = CommentFields.RATING)
 	private String rating;
@@ -40,11 +40,11 @@ public class Comment {
 	@JoinColumn(name = UserFields.USER_ID)
 	private User user;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

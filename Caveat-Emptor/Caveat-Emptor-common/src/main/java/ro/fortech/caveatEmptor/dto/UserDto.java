@@ -8,14 +8,14 @@ public class UserDto implements Serializable {
 
 	private static final long serialVersionUID = 6241298386176174535L;
 
-	private Integer id;
+	private Long id;
 	private String firstName;
 	private String lastName;
 	private String fullName;
 	private String username;
 	private String password;
 	private String email;
-	private Integer ranking;
+	private Long ranking;
 	private boolean admin;
 	private boolean enabled;
 	private AddressDto homeAddress;
@@ -24,11 +24,11 @@ public class UserDto implements Serializable {
 	private List<ItemDto> itemsSold = new ArrayList<>();
 	private List<ItemDto> itemsBought = new ArrayList<>();
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -76,11 +76,11 @@ public class UserDto implements Serializable {
 		this.email = email;
 	}
 
-	public Integer getRanking() {
+	public Long getRanking() {
 		return ranking;
 	}
 
-	public void setRanking(Integer ranking) {
+	public void setRanking(Long ranking) {
 		this.ranking = ranking;
 	}
 

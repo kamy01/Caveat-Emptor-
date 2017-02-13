@@ -23,7 +23,7 @@ public class Bid {
 	@Id
 	@Column(name = BidFields.BID_ID, unique = true, nullable = false, updatable = false)
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 
 	@Column(name = BidFields.AMOUNT)
 	private BigDecimal amount;
@@ -39,11 +39,11 @@ public class Bid {
 	@JoinColumn(name = ItemFields.ITEM_ID)
 	private Item item;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

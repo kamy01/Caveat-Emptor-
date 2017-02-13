@@ -6,16 +6,16 @@ public class AddressDto implements Serializable {
 
 	private static final long serialVersionUID = -4123384527862950446L;
 
-	private Integer id;
+	private Long id;
 	private String street;
 	private String zipCode;
 	private String city;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

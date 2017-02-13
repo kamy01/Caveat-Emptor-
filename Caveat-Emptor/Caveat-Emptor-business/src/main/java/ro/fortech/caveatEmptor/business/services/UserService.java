@@ -42,7 +42,7 @@ public class UserService {
 		return userDtos;
 	}
 
-	public Integer createUser(UserDto userDto) throws Exception {
+	public Long createUser(UserDto userDto) throws Exception {
 		this.validate(userDto, "create");
 		return userRepository.createUser(createUserEntity(userDto));
 	}

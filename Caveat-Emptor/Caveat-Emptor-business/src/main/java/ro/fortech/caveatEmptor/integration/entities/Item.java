@@ -29,7 +29,7 @@ public class Item {
 	@Id
 	@GeneratedValue
 	@Column(name = ItemFields.ITEM_ID, unique = true, nullable = false, updatable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = ItemFields.NAME)
 	private String name;
@@ -80,11 +80,11 @@ public class Item {
 					@JoinColumn(name = UserFields.USER_ID, nullable = false, updatable = false) })
 	private List<User> buyers = new ArrayList<>();
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

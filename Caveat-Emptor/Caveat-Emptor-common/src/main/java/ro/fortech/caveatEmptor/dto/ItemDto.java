@@ -11,7 +11,7 @@ public class ItemDto implements Serializable {
 
 	private static final long serialVersionUID = 3872505178938025498L;
 
-	private Integer id;
+	private Long id;
 	private String name;
 	private String description;
 	private BigDecimal initialPrice;
@@ -20,17 +20,17 @@ public class ItemDto implements Serializable {
 	private Date endDate;
 	private String state;
 	private Timestamp approvalDateTime;
-	private List<Integer> categories = new ArrayList<>();
+	private List<Long> categories = new ArrayList<>();
 	private BidDto successfullBid;
 	private List<BidDto> bids = new ArrayList<>();
 	private List<UserDto> sellers = new ArrayList<>();
 	private List<UserDto> buyers = new ArrayList<>();
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -98,11 +98,11 @@ public class ItemDto implements Serializable {
 		this.approvalDateTime = approvalDateTime;
 	}
 
-	public List<Integer> getCategories() {
+	public List<Long> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(List<Integer> categories) {
+	public void setCategories(List<Long> categories) {
 		this.categories = categories;
 	}
 

@@ -15,7 +15,7 @@ public class Address {
 	@Id
 	@GeneratedValue
 	@Column(name = AddressFields.ADDRESS_ID)
-	private Integer id;
+	private Long id;
 
 	@Column(name = AddressFields.STREET)
 	private String street;
@@ -26,11 +26,11 @@ public class Address {
 	@Column(name = AddressFields.CITY)
 	private String city;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
