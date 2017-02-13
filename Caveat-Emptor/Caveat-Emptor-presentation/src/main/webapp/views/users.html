@@ -1,0 +1,54 @@
+<h1>USERS ARE AWESOME</h1>
+
+<form class="table-responsive" ng-if="ctrl.users.length">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th ng-click="ctrl.setSortType('fullName', $event)">
+					<input type="text" placeholder="Name" ng-model="searchFilter.fullName"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'fullName' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'fullName' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-click="ctrl.setSortType('username', $event)">
+					<input type="text" placeholder="Account" ng-model="searchFilter.username"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'username' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'username' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-click="ctrl.setSortType('email', $event)">
+					<input type="text" placeholder="Email" ng-model="searchFilter.email"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'email' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'email' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th>#items placed</th>
+				<th>#items sold</th>
+				<th>Is Admin</th>
+				<th>Is Enabled</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr dir-paginate="user in ctrl.users | filter:searchFilter | orderBy:ctrl.getSortType():ctrl.isReverse() | itemsPerPage:ctrl.itemsPerPage">
+				<td>{{user.fullName}}</td>
+				<td>{{user.username}}</td>
+				<td>{{user.email}}</td>
+				<td>{{user.itemsBought == null ? 0 : user.itemsBought.length}}</td>
+				<td>{{user.itemsSold == null ? 0 : user.itemsSold.length}}</td>
+				<td><span class="glyphicon glyphicon-ok" ng-if="user.admin"></span></td>
+				<td><span class="glyphicon glyphicon-ok" ng-if="user.enabled"></span></td>
+				<td>
+					<input type="button" value="{{user.enabled ? 'Disable' : 'Enable'}}" ng-click="ctrl.updateUserStatus(user)" ng-if="!user.admin"></input>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<<div class="text-center">
+		<dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+	</div>
+	
+</form>
