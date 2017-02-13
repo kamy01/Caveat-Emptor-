@@ -1,5 +1,9 @@
 package ro.fortech.caveatEmptor.business.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +19,7 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public boolean isUser(UserDto userDto) throws Exception {
+	public UserDto authenticateUser(UserDto userDto) throws Exception {
 		this.validate(userDto, "login");
 		User user = userRepository.getUserByUsernameAndPassword(userDto);
 
@@ -23,12 +27,24 @@ public class UserService {
 			throw new UserException("Provided credentials are not valid!");
 		}
 
-		return true;
+		return createUserDto(user);
+	}
+
+	public List<UserDto> getAll() throws Exception {
+		List<UserDto> userDtos = new ArrayList<>();
+
+		userDtos = userRepository.getAllUsers().stream().map(user -> createUserDto(user)).collect(Collectors.toList());
+
+		if (userDtos == null || userDtos.isEmpty()) {
+			throw new UserException("No users found");
+		}
+
+		return userDtos;
 	}
 
 	public Integer createUser(UserDto userDto) throws Exception {
 		this.validate(userDto, "create");
-		return userRepository.createUser(userDto);
+		return userRepository.createUser(createUserEntity(userDto));
 	}
 
 	private void validate(UserDto userDto, String method) throws Exception {
@@ -50,6 +66,30 @@ public class UserService {
 			throw new Exception("Internal server error!");
 		}
 
+	}
+
+	private UserDto createUserDto(User user) {
+		UserDto userDto = new UserDto();
+		userDto.setId(user.getId());
+		userDto.setUsername(user.getUsername());
+		userDto.setAdmin(user.isAdmin());
+		userDto.setEmail(user.getEmail());
+		userDto.setFirstName(user.getFirstName());
+		userDto.setLastName(user.getLastName());
+		return userDto;
+	}
+
+	private User createUserEntity(UserDto userDto) {
+
+		User user = new User();
+		user.setAdmin(false);
+		user.setUsername(userDto.getUsername());
+		user.setFirstName(userDto.getFirstName());
+		user.setLastName(userDto.getLastName());
+		user.setEmail(userDto.getEmail());
+		user.setPassword(userDto.getPassword());
+
+		return user;
 	}
 
 }

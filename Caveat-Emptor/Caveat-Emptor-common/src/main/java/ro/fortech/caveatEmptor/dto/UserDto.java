@@ -11,11 +11,13 @@ public class UserDto implements Serializable {
 	private Integer id;
 	private String firstName;
 	private String lastName;
+	private String fullName;
 	private String username;
 	private String password;
 	private String email;
 	private Integer ranking;
-	private boolean isAdmin;
+	private boolean admin;
+	private boolean enabled;
 	private AddressDto homeAddress;
 	private AddressDto billingAddress;
 	private AddressDto shippingAddress;
@@ -44,6 +46,10 @@ public class UserDto implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getFullName() {
+		return this.firstName + " " + this.lastName;
 	}
 
 	public String getUsername() {
@@ -79,11 +85,19 @@ public class UserDto implements Serializable {
 	}
 
 	public boolean isAdmin() {
-		return isAdmin;
+		return admin;
 	}
 
 	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
+		this.admin = isAdmin;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.enabled = isEnabled;
 	}
 
 	public AddressDto getHomeAddress() {

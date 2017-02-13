@@ -26,12 +26,6 @@ public class CategoryService {
 
 		if (allCategories != null && !allCategories.isEmpty()) {
 			categoryDtos = new LinkedList<>();
-			// Iterator<Category> it = allCategories.iterator();
-			// while (it.hasNext()) {
-			// Category category = it.next();
-			// categoryDtos.add(createCategoryDto(category, true));
-			//
-			// }
 			categoryDtos = allCategories.stream().map(category -> createCategoryDto(category, true))
 					.collect(Collectors.toList());
 		}

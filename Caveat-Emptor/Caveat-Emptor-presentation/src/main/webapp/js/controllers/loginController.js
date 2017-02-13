@@ -14,7 +14,7 @@ function LoginController($location, authenticationService, messagingService) {
 	function Login() {
 		authenticationService.login(ctrl.user.username, ctrl.user.password, function(response) {
 			if (response.success) {
-				authenticationService.setCredentials(ctrl.user.username, ctrl.user.password);
+				authenticationService.setCredentials(ctrl.user.username, ctrl.user.password, response.data);
 				$location.path('/');
 			} else {
 				messagingService.error(response.message);

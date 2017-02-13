@@ -2,7 +2,11 @@ mainApp.controller('navController', NavigationController);
 
 NavigationController.$inject = [ '$scope', '$rootScope' ];
 function NavigationController($scope, $rootScope) {
-	$scope.links = [ {
+
+	var ctrl = this;
+	ctrl.displayLink = DisplayLink;
+
+	ctrl.links = [ {
 		title : 'Home',
 		url : "#/"
 	}, {
@@ -21,4 +25,13 @@ function NavigationController($scope, $rootScope) {
 		title : 'Account',
 		url : "#/account"
 	} ];
+
+	ctrl.managementLinks = [ '#/users' ];
+
+	function DisplayLink(link) {
+		if (ctrl.managementLinks.includes(link.url))
+			return $rootScope.globals.currentUser.isAdmin;
+		return true;
+	}
+
 };

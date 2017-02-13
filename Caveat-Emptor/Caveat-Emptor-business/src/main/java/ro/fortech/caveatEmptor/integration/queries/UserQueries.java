@@ -18,4 +18,13 @@ public class UserQueries {
 		GET_USER_BY_USERNAME = sb.toString();
 	}
 
+	public static final String GET_ALL_USERS;
+	static {
+		StringBuilder sb = new StringBuilder();
+		sb.append("FROM ");
+		sb.append(User.class.getName());
+
+		GET_ALL_USERS = sb.toString();
+	}
+
 }
