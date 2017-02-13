@@ -15,25 +15,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields;
+import static ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields.*;
 
 @Entity
-@Table(name = CategoryFields.CATEGORIES)
+@Table(name = CATEGORIES)
 public class Category {
 
     @Id
-    @Column(name = CategoryFields.CATEGORY_ID, unique = true, nullable = false, updatable = false)
+    @Column(name = CATEGORY_ID, unique = true, nullable = false, updatable = false)
     @GeneratedValue
     private Long id;
 
-    @Column(name = CategoryFields.NAME)
+    @Column(name = CATEGORY_NAME)
     private String name;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Category> children;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = CategoryFields.PARENT_ID)
+    @JoinColumn(name = PARENT_ID)
     private Category parent;
 
     @ManyToMany(mappedBy = "categories")

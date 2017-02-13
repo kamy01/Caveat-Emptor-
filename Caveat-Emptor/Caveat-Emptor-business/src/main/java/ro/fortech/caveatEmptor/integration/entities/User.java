@@ -15,51 +15,51 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 
-import ro.fortech.caveatEmptor.integration.entities.fields.UserFields;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.*;
 
 @Entity
-@Table(name = UserFields.USERS)
+@Table(name = USERS)
 public class User {
 
     @Id
     @GeneratedValue
-    @Column(name = UserFields.USER_ID, unique = true, nullable = false, updatable = false)
+    @Column(name = USER_ID, unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = UserFields.FIRST_NAME, nullable = false)
+    @Column(name = FIRST_NAME, nullable = false)
     private String firstName;
 
-    @Column(name = UserFields.LAST_NAME, nullable = false)
+    @Column(name = LAST_NAME, nullable = false)
     private String lastName;
 
     @Size(min = 3, message = "Username must be at least 3 character!")
-    @Column(name = UserFields.USER_NAME, unique = true, nullable = false, updatable = false)
+    @Column(name = USER_NAME, unique = true, nullable = false, updatable = false)
     private String username;
 
     @Size(min = 5, message = "Password must be at least 3 character!")
-    @Column(name = UserFields.PASSWORD, nullable = false)
+    @Column(name = PASSWORD, nullable = false)
     private String password;
 
     @Email
-    @Column(name = UserFields.EMAIL, unique = true, nullable = false)
+    @Column(name = EMAIL, unique = true, nullable = false)
     private String email;
 
-    @Column(name = UserFields.RANKING)
+    @Column(name = RANKING)
     private Long ranking;
 
-    @Column(name = UserFields.IS_ADMIN)
+    @Column(name = IS_ADMIN)
     private boolean isAdmin;
 
     @OneToOne
-    @JoinColumn(name = UserFields.HOME_ADDRESS_ID)
+    @JoinColumn(name = HOME_ADDRESS_ID)
     private Address homeAddress;
 
     @OneToOne
-    @JoinColumn(name = UserFields.BILLING_ADDRESS_ID)
+    @JoinColumn(name = BILLING_ADDRESS_ID)
     private Address billingAddress;
 
     @OneToOne
-    @JoinColumn(name = UserFields.SHIPPING_ADDRESS_ID)
+    @JoinColumn(name = SHIPPING_ADDRESS_ID)
     private Address shippingAddress;
 
     @ManyToMany(mappedBy = "sellers")

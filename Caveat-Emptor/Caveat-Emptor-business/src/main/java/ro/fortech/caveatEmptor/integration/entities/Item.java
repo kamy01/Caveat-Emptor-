@@ -18,66 +18,66 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields;
-import ro.fortech.caveatEmptor.integration.entities.fields.ItemFields;
-import ro.fortech.caveatEmptor.integration.entities.fields.UserFields;
+import static ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields.*;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.*;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.*;
 
 @Entity
-@Table(name = ItemFields.ITEMS)
+@Table(name = ITEMS)
 public class Item {
 
     @Id
     @GeneratedValue
-    @Column(name = ItemFields.ITEM_ID, unique = true, nullable = false, updatable = false)
+    @Column(name = ITEM_ID, unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = ItemFields.NAME)
+    @Column(name = ITEM_NAME)
     private String name;
 
-    @Column(name = ItemFields.DESCRIPTION)
+    @Column(name = DESCRIPTION)
     private String description;
 
-    @Column(name = ItemFields.INITIAL_PRICE)
+    @Column(name = INITIAL_PRICE)
     private BigDecimal initialPrice;
 
-    @Column(name = ItemFields.RESERVE_PRICE)
+    @Column(name = RESERVE_PRICE)
     private BigDecimal reservePrice;
 
-    @Column(name = ItemFields.START_DATE)
+    @Column(name = START_DATE)
     private Date startDate;
 
-    @Column(name = ItemFields.END_DATE)
+    @Column(name = END_DATE)
     private Date endDate;
 
-    @Column(name = ItemFields.STATE)
+    @Column(name = STATE)
     private String state;
 
-    @Column(name = ItemFields.APPROVAL_DATE_TIME)
+    @Column(name = APPROVAL_DATE_TIME)
     private Timestamp approvalDateTime;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = ItemFields.ITEM_CATEGORY, joinColumns = {
-	    @JoinColumn(name = ItemFields.ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
-		    @JoinColumn(name = CategoryFields.CATEGORY_ID, nullable = false, updatable = false) })
+    @JoinTable(name = ITEM_CATEGORY, joinColumns = {
+	    @JoinColumn(name = ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
+		    @JoinColumn(name = CATEGORY_ID, nullable = false, updatable = false) })
     private List<Category> categories;
 
     @OneToOne
-    @JoinColumn(name = ItemFields.SUCCESSFUL_BID_ID)
+    @JoinColumn(name = SUCCESSFUL_BID_ID)
     private Bid successfullBid;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Bid> bids;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = ItemFields.ITEM_SELLER, joinColumns = {
-	    @JoinColumn(name = ItemFields.ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
-		    @JoinColumn(name = UserFields.USER_ID, nullable = false, updatable = false) })
+    @JoinTable(name = ITEM_SELLER, joinColumns = {
+	    @JoinColumn(name = ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
+		    @JoinColumn(name = USER_ID, nullable = false, updatable = false) })
     private List<User> sellers;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = ItemFields.ITEM_BUYER, joinColumns = {
-	    @JoinColumn(name = ItemFields.ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
-		    @JoinColumn(name = UserFields.USER_ID, nullable = false, updatable = false) })
+    @JoinTable(name = ITEM_BUYER, joinColumns = {
+	    @JoinColumn(name = ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
+		    @JoinColumn(name = USER_ID, nullable = false, updatable = false) })
     private List<User> buyers;
 
     public Item() {
