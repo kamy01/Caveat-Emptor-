@@ -21,54 +21,63 @@ import ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields;
 @Table(name = CategoryFields.CATEGORIES)
 public class Category {
 
-	@Id
-	@Column(name = CategoryFields.CATEGORY_ID, unique = true, nullable = false, updatable = false)
-	@GeneratedValue
-	private Long id;
+    @Id
+    @Column(name = CategoryFields.CATEGORY_ID, unique = true, nullable = false, updatable = false)
+    @GeneratedValue
+    private Long id;
 
-	@Column(name = CategoryFields.NAME)
-	private String name;
+    @Column(name = CategoryFields.NAME)
+    private String name;
 
-	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Category> children = new ArrayList<>();
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Category> children;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = CategoryFields.PARENT_ID)
-	private Category parent;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = CategoryFields.PARENT_ID)
+    private Category parent;
 
-	@ManyToMany(mappedBy = "categories")
-	private List<Item> items = new ArrayList<>();
+    @ManyToMany(mappedBy = "categories")
+    private List<Item> items;
 
-	public Long getId() {
-		return id;
-	}
+    public Category() {
+	initMembers();
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private void initMembers() {
+	children = new ArrayList<>();
+	items = new ArrayList<>();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public Category getParent() {
-		return parent;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public void setParent(Category parent) {
-		this.parent = parent;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public List<Category> getChildren() {
-		return children;
-	}
+    public Category getParent() {
+	return parent;
+    }
 
-	public void setChildren(List<Category> children) {
-		this.children = children;
-	}
+    public void setParent(Category parent) {
+	this.parent = parent;
+    }
+
+    public List<Category> getChildren() {
+	return children;
+    }
+
+    public void setChildren(List<Category> children) {
+	this.children = children;
+    }
 
 }

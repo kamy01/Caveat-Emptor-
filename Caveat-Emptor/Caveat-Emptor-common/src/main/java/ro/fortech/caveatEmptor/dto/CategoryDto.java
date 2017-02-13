@@ -6,43 +6,51 @@ import java.util.List;
 
 public class CategoryDto implements Serializable {
 
-	private static final long serialVersionUID = -2214525257891163483L;
+    private static final long serialVersionUID = -2214525257891163483L;
 
-	private Long id;
-	private String name;
-	private Long parentId;
-	private List<CategoryDto> children = new ArrayList<>();
+    private Long id;
+    private String name;
+    private Long parentId;
+    private List<CategoryDto> children;
 
-	public Long getId() {
-		return id;
-	}
+    public CategoryDto() {
+	initMembers();
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private void initMembers() {
+	children = new ArrayList<>();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public Long getParentId() {
-		return parentId;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public void setParentId(Long parent) {
-		this.parentId = parent;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public List<CategoryDto> getChildren() {
-		return children;
-	}
+    public Long getParentId() {
+	return parentId;
+    }
 
-	public void setChildren(List<CategoryDto> children) {
-		this.children = children;
-	}
+    public void setParentId(Long parent) {
+	this.parentId = parent;
+    }
+
+    public List<CategoryDto> getChildren() {
+	return children;
+    }
+
+    public void setChildren(List<CategoryDto> children) {
+	this.children = children;
+    }
 
 }

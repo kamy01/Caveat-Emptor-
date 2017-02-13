@@ -6,138 +6,147 @@ import java.util.List;
 
 public class UserDto implements Serializable {
 
-	private static final long serialVersionUID = 6241298386176174535L;
+    private static final long serialVersionUID = 6241298386176174535L;
 
-	private Long id;
-	private String firstName;
-	private String lastName;
-	private String fullName;
-	private String username;
-	private String password;
-	private String email;
-	private Long ranking;
-	private boolean admin;
-	private boolean enabled;
-	private AddressDto homeAddress;
-	private AddressDto billingAddress;
-	private AddressDto shippingAddress;
-	private List<ItemDto> itemsSold = new ArrayList<>();
-	private List<ItemDto> itemsBought = new ArrayList<>();
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String fullName;
+    private String username;
+    private String password;
+    private String email;
+    private Long ranking;
+    private boolean admin;
+    private boolean enabled;
+    private AddressDto homeAddress;
+    private AddressDto billingAddress;
+    private AddressDto shippingAddress;
+    private List<ItemDto> itemsSold;
+    private List<ItemDto> itemsBought;
 
-	public Long getId() {
-		return id;
-	}
+    public UserDto() {
+	initMembers();
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private void initMembers() {
+	itemsSold = new ArrayList<>();
+	itemsBought = new ArrayList<>();
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getFirstName() {
+	return firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setFirstName(String firstName) {
+	this.firstName = firstName;
+    }
 
-	public String getFullName() {
-		return this.firstName + " " + this.lastName;
-	}
+    public String getLastName() {
+	return lastName;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setLastName(String lastName) {
+	this.lastName = lastName;
+    }
 
-	public void setUsername(String userName) {
-		this.username = userName;
-	}
+    public String getFullName() {
+	return this.firstName + " " + this.lastName;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getUsername() {
+	return username;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setUsername(String userName) {
+	this.username = userName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getPassword() {
+	return password;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setPassword(String password) {
+	this.password = password;
+    }
 
-	public Long getRanking() {
-		return ranking;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public void setRanking(Long ranking) {
-		this.ranking = ranking;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
-	public boolean isAdmin() {
-		return admin;
-	}
+    public Long getRanking() {
+	return ranking;
+    }
 
-	public void setAdmin(boolean isAdmin) {
-		this.admin = isAdmin;
-	}
+    public void setRanking(Long ranking) {
+	this.ranking = ranking;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public boolean isAdmin() {
+	return admin;
+    }
 
-	public void setEnabled(boolean isEnabled) {
-		this.enabled = isEnabled;
-	}
+    public void setAdmin(boolean isAdmin) {
+	this.admin = isAdmin;
+    }
 
-	public AddressDto getHomeAddress() {
-		return homeAddress;
-	}
+    public boolean isEnabled() {
+	return enabled;
+    }
 
-	public void setHomeAddress(AddressDto homeAddress) {
-		this.homeAddress = homeAddress;
-	}
+    public void setEnabled(boolean isEnabled) {
+	this.enabled = isEnabled;
+    }
 
-	public AddressDto getBillingAddress() {
-		return billingAddress;
-	}
+    public AddressDto getHomeAddress() {
+	return homeAddress;
+    }
 
-	public void setBillingAddress(AddressDto billingAddress) {
-		this.billingAddress = billingAddress;
-	}
+    public void setHomeAddress(AddressDto homeAddress) {
+	this.homeAddress = homeAddress;
+    }
 
-	public AddressDto getShippingAddress() {
-		return shippingAddress;
-	}
+    public AddressDto getBillingAddress() {
+	return billingAddress;
+    }
 
-	public void setShippingAddress(AddressDto shippingAddress) {
-		this.shippingAddress = shippingAddress;
-	}
+    public void setBillingAddress(AddressDto billingAddress) {
+	this.billingAddress = billingAddress;
+    }
 
-	public List<ItemDto> getItemsSold() {
-		return itemsSold;
-	}
+    public AddressDto getShippingAddress() {
+	return shippingAddress;
+    }
 
-	public void setItemsSold(List<ItemDto> itemsSold) {
-		this.itemsSold = itemsSold;
-	}
+    public void setShippingAddress(AddressDto shippingAddress) {
+	this.shippingAddress = shippingAddress;
+    }
 
-	public List<ItemDto> getItemsBought() {
-		return itemsBought;
-	}
+    public List<ItemDto> getItemsSold() {
+	return itemsSold;
+    }
 
-	public void setItemsBought(List<ItemDto> itemsBought) {
-		this.itemsBought = itemsBought;
-	}
+    public void setItemsSold(List<ItemDto> itemsSold) {
+	this.itemsSold = itemsSold;
+    }
+
+    public List<ItemDto> getItemsBought() {
+	return itemsBought;
+    }
+
+    public void setItemsBought(List<ItemDto> itemsBought) {
+	this.itemsBought = itemsBought;
+    }
 
 }
