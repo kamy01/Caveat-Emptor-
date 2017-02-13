@@ -1,6 +1,6 @@
 package ro.fortech.caveatEmptor.business.services;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,39 +14,38 @@ import ro.fortech.caveatEmptor.integration.repositories.categories.CategoryRepos
 @Service
 public class CategoryService {
 
-	@Autowired
-	private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
-	public List<CategoryDto> getAllCategories() {
-		return createCategoryList(categoryRepository.getAllCategories());
+    public List<CategoryDto> getAllCategories() {
+	return createCategoryList(categoryRepository.getAllCategories());
+    }
+
+    private List<CategoryDto> createCategoryList(List<Category> allCategories) {
+	List<CategoryDto> categoryDtos = new ArrayList<>();
+
+	if (allCategories != null && !allCategories.isEmpty()) {
+	    categoryDtos = allCategories.stream().map(category -> createCategoryDto(category, true))
+		    .collect(Collectors.toList());
 	}
 
-	private List<CategoryDto> createCategoryList(List<Category> allCategories) {
-		List<CategoryDto> categoryDtos = null;
+	return categoryDtos;
+    }
 
-		if (allCategories != null && !allCategories.isEmpty()) {
-			categoryDtos = new LinkedList<>();
-			categoryDtos = allCategories.stream().map(category -> createCategoryDto(category, true))
-					.collect(Collectors.toList());
-		}
+    private CategoryDto createCategoryDto(Category category, boolean addChildren) {
+	CategoryDto categoryDto = null;
 
-		return categoryDtos;
+	if (category != null && category.getId() != null) {
+	    categoryDto = new CategoryDto();
+	    categoryDto.setId(category.getId());
+	    categoryDto.setParentId(category.getParent() != null ? category.getParent().getId() : null);
+	    categoryDto.setName(category.getName());
+	    if (addChildren) {
+		categoryDto.setChildren(createCategoryList(category.getChildren()));
+	    }
 	}
 
-	private CategoryDto createCategoryDto(Category category, boolean addChildren) {
-		CategoryDto categoryDto = null;
-
-		if (category != null && category.getId() != null) {
-			categoryDto = new CategoryDto();
-			categoryDto.setId(category.getId());
-			categoryDto.setParentId(category.getParent() != null ? category.getParent().getId() : null);
-			categoryDto.setName(category.getName());
-			if (addChildren) {
-				categoryDto.setChildren(createCategoryList(category.getChildren()));
-			}
-		}
-
-		return categoryDto;
-	}
+	return categoryDto;
+    }
 
 }

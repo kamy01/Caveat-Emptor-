@@ -1,5 +1,6 @@
 package ro.fortech.caveatEmptor.integration.repositories.users;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -64,6 +65,10 @@ public class UserRepository {
 	session.close();
 
 	logger.info("<<<END>>> UserRepository.getAllUsers");
+
+	if (users == null) {
+	    users = new ArrayList<>();
+	}
 
 	return users;
     }
