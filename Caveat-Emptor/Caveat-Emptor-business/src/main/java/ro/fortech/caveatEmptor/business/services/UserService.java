@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ro.fortech.caveatEmptor.dto.UserDto;
@@ -19,11 +22,22 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private BCryptPasswordEncoder encoder;
+
+    @PostConstruct
+    public void init() {
+	encoder = new BCryptPasswordEncoder();
+    }
+
     public UserDto authenticateUser(UserDto userDto) throws Exception {
 	this.validate(userDto, "login");
-	User user = userRepository.getUserByUsernameAndPassword(userDto);
+	User user = userRepository.getUserByUsername(userDto);
 
 	if (user == null || user.getId() == null) {
+	    throw new UserException("Provided credentials are not valid!");
+	}
+
+	if (!encoder.matches(userDto.getPassword(), user.getPassword())) {
 	    throw new UserException("Provided credentials are not valid!");
 	}
 
@@ -87,7 +101,7 @@ public class UserService {
 	user.setFirstName(userDto.getFirstName());
 	user.setLastName(userDto.getLastName());
 	user.setEmail(userDto.getEmail());
-	user.setPassword(userDto.getPassword());
+	user.setPassword(encoder.encode(userDto.getPassword()));
 
 	return user;
     }

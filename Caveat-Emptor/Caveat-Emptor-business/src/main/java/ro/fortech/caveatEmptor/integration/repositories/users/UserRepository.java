@@ -30,22 +30,21 @@ public class UserRepository {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public User getUserByUsernameAndPassword(UserDto userDto) throws Exception {
-	logger.info("<<<START>>> UserRepository.getUserByUsernameAndPassword with params username: "
-		+ userDto.getUsername() + ", password: ***********");
+    public User getUserByUsername(UserDto userDto) throws Exception {
+	logger.info("<<<START>>> UserRepository.getUserByUsername with params username: " + userDto.getUsername());
 
 	User user = null;
 
 	Session session = sessionFactory.openSession();
 	Transaction tx = session.beginTransaction();
-	Query query = session.createQuery(UserQueries.GET_USER_BY_USERNAME)
-		.setParameter("username", userDto.getUsername()).setParameter("password", userDto.getPassword());
+	Query query = session.createQuery(UserQueries.GET_USER_BY_USERNAME).setParameter("username",
+		userDto.getUsername());
 	user = (User) query.uniqueResult();
 	session.flush();
 	tx.commit();
 	session.close();
 
-	logger.info("<<<END>>> UserRepository.getUserByUsernameAndPassword");
+	logger.info("<<<END>>> UserRepository.getUserByUsername");
 
 	return user;
     }
