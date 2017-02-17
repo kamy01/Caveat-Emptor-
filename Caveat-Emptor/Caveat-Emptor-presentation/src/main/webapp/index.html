@@ -29,6 +29,7 @@
 <!-- Utilitary setup-->
 <script src="js/utils/Base64.js"></script>
 <script src="js/utils/consts.js"></script>
+<script src="js/lib/dirPagination.js"></script>
 
 <!-- Services setup-->
 <script src="js/services/authenticationService.js"></script>
@@ -41,12 +42,15 @@
 <script src="js/controllers/loginController.js"></script>
 <script src="js/controllers/registerController.js"></script>
 <script src="js/controllers/catNavController.js"></script>
+<script src="js/controllers/usersController.js"></script>
+
+<!-- Directives -->
 <script src="js/directives/categoriesNav.js"></script>
 <script src="js/directives/tree.js"></script>
 
 <body ng-app="mainApp">
 
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse" ng-if="globals.userLoggedIn">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -57,13 +61,12 @@
 				<a class="navbar-brand" href="#/">Logo</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav" ng-controller="navController">
-					<li ng-repeat="link in links" ng-if="globals.userLoggedIn"><a
+				<ul class="nav navbar-nav" ng-controller="navController as ctrl">
+					<li ng-repeat="link in ctrl.links" ng-if="ctrl.displayLink(link)"><a
 						href="{{link.url}}">{{link.title}}</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#!/login" ng-if="globals.userLoggedIn"><span
-							class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+					<li><a href="#!/login"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				</ul>
 			</div>
 		</div>

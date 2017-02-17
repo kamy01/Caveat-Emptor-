@@ -32,7 +32,7 @@ function config($routeProvider) {
 		controllerAs : 'ctrl'
 	}).when('/users', {
 		templateUrl : 'views/users.html',
-		controller : '',
+		controller : 'usersController',
 		controllerAs : 'ctrl'
 	}).when('/account', {
 		templateUrl : 'views/account.html',

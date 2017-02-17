@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class DomainTableService {
 
-	public String getName() {
-		return "Silviu";
-	}
+    public String getName() {
+	return "Silviu";
+    }
 
 }

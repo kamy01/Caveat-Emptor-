@@ -1,1 +1,1 @@
-var mainApp = angular.module('mainApp', [ 'ngRoute', 'ngCookies' ]);
+var mainApp = angular.module('mainApp', [ 'ngRoute', 'ngCookies', 'angularUtils.directives.dirPagination']);

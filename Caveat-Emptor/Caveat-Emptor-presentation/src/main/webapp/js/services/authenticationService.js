@@ -20,13 +20,14 @@ function authenticationService($http, $cookies, $rootScope) {
 
 	}
 
-	function SetCredentials(username, password) {
+	function SetCredentials(username, password, userResponse) {
 		var authData = Base64.encode(username + ':' + password);
 
 		$rootScope.globals = {
 			currentUser : {
 				username : username,
-				authData : authData
+				authData : authData,
+				isAdmin : userResponse.admin
 			},
 			userLoggedIn : true
 		};

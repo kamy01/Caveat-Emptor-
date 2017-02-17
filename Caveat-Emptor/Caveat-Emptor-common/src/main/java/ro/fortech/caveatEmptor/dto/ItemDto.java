@@ -9,133 +9,144 @@ import java.util.List;
 
 public class ItemDto implements Serializable {
 
-	private static final long serialVersionUID = 3872505178938025498L;
+    private static final long serialVersionUID = 3872505178938025498L;
 
-	private Integer id;
-	private String name;
-	private String description;
-	private BigDecimal initialPrice;
-	private BigDecimal reservePrice;
-	private Date startDate;
-	private Date endDate;
-	private String state;
-	private Timestamp approvalDateTime;
-	private List<Integer> categories = new ArrayList<>();
-	private BidDto successfullBid;
-	private List<BidDto> bids = new ArrayList<>();
-	private List<UserDto> sellers = new ArrayList<>();
-	private List<UserDto> buyers = new ArrayList<>();
+    private Long id;
+    private String name;
+    private String description;
+    private BigDecimal initialPrice;
+    private BigDecimal reservePrice;
+    private Date startDate;
+    private Date endDate;
+    private String state;
+    private Timestamp approvalDateTime;
+    private List<Long> categories;
+    private BidDto successfullBid;
+    private List<BidDto> bids;
+    private List<UserDto> sellers;
+    private List<UserDto> buyers;
 
-	public Integer getId() {
-		return id;
-	}
+    public ItemDto() {
+	initMembers();
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    private void initMembers() {
+	categories = new ArrayList<>();
+	bids = new ArrayList<>();
+	sellers = new ArrayList<>();
+	buyers = new ArrayList<>();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public BigDecimal getInitialPrice() {
-		return initialPrice;
-	}
+    public String getDescription() {
+	return description;
+    }
 
-	public void setInitialPrice(BigDecimal initialPrice) {
-		this.initialPrice = initialPrice;
-	}
+    public void setDescription(String description) {
+	this.description = description;
+    }
 
-	public BigDecimal getReservePrice() {
-		return reservePrice;
-	}
+    public BigDecimal getInitialPrice() {
+	return initialPrice;
+    }
 
-	public void setReservePrice(BigDecimal reservePrice) {
-		this.reservePrice = reservePrice;
-	}
+    public void setInitialPrice(BigDecimal initialPrice) {
+	this.initialPrice = initialPrice;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public BigDecimal getReservePrice() {
+	return reservePrice;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public void setReservePrice(BigDecimal reservePrice) {
+	this.reservePrice = reservePrice;
+    }
 
-	public Date getEndDate() {
-		return endDate;
-	}
+    public Date getStartDate() {
+	return startDate;
+    }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public void setStartDate(Date startDate) {
+	this.startDate = startDate;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public Date getEndDate() {
+	return endDate;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public void setEndDate(Date endDate) {
+	this.endDate = endDate;
+    }
 
-	public Timestamp getApprovalDateTime() {
-		return approvalDateTime;
-	}
+    public String getState() {
+	return state;
+    }
 
-	public void setApprovalDateTime(Timestamp approvalDateTime) {
-		this.approvalDateTime = approvalDateTime;
-	}
+    public void setState(String state) {
+	this.state = state;
+    }
 
-	public List<Integer> getCategories() {
-		return categories;
-	}
+    public Timestamp getApprovalDateTime() {
+	return approvalDateTime;
+    }
 
-	public void setCategories(List<Integer> categories) {
-		this.categories = categories;
-	}
+    public void setApprovalDateTime(Timestamp approvalDateTime) {
+	this.approvalDateTime = approvalDateTime;
+    }
 
-	public BidDto getSuccessfullBid() {
-		return successfullBid;
-	}
+    public List<Long> getCategories() {
+	return categories;
+    }
 
-	public void setSuccessfullBid(BidDto successfullBid) {
-		this.successfullBid = successfullBid;
-	}
+    public void setCategories(List<Long> categories) {
+	this.categories = categories;
+    }
 
-	public List<BidDto> getBids() {
-		return bids;
-	}
+    public BidDto getSuccessfullBid() {
+	return successfullBid;
+    }
 
-	public void setBids(List<BidDto> bids) {
-		this.bids = bids;
-	}
+    public void setSuccessfullBid(BidDto successfullBid) {
+	this.successfullBid = successfullBid;
+    }
 
-	public List<UserDto> getSellers() {
-		return sellers;
-	}
+    public List<BidDto> getBids() {
+	return bids;
+    }
 
-	public void setSellers(List<UserDto> sellers) {
-		this.sellers = sellers;
-	}
+    public void setBids(List<BidDto> bids) {
+	this.bids = bids;
+    }
 
-	public List<UserDto> getBuyers() {
-		return buyers;
-	}
+    public List<UserDto> getSellers() {
+	return sellers;
+    }
 
-	public void setBuyers(List<UserDto> buyers) {
-		this.buyers = buyers;
-	}
+    public void setSellers(List<UserDto> sellers) {
+	this.sellers = sellers;
+    }
+
+    public List<UserDto> getBuyers() {
+	return buyers;
+    }
+
+    public void setBuyers(List<UserDto> buyers) {
+	this.buyers = buyers;
+    }
 
 }

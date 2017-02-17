@@ -23,7 +23,8 @@ public class AuthenticationController {
 		System.out.println(user.getUsername());
 		ResponseDto<UserDto> response = new ResponseDto<>();
 		try {
-			response.setSuccess(userService.isUser(user));
+			response.setData(userService.authenticateUser(user));
+			response.setSuccess(true);
 		} catch (Exception e) {
 			response.setSuccess(false);
 			response.setMessage(e.getMessage());

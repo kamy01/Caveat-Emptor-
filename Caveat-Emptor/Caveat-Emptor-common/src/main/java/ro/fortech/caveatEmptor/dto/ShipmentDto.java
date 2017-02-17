@@ -7,7 +7,7 @@ public class ShipmentDto implements Serializable {
 
 	private static final long serialVersionUID = 1556648722990094125L;
 
-	private Integer id;
+	private Long id;
 	private String state;
 	private Date creationDate;
 	private UserDto buyer;
@@ -15,11 +15,11 @@ public class ShipmentDto implements Serializable {
 	private ItemDto item;
 	private AddressDto deliveryAddress;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -7,18 +7,18 @@ public class CommentDto implements Serializable {
 
 	private static final long serialVersionUID = 3352649760868920077L;
 
-	private Integer id;
+	private Long id;
 	private String rating;
 	private String text;
 	private Date creationDate;
 	private ItemDto item;
 	private UserDto user;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

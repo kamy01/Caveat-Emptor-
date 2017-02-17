@@ -6,56 +6,56 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import ro.fortech.caveatEmptor.integration.entities.fields.AddressFields;
+import static ro.fortech.caveatEmptor.integration.entities.fields.AddressFields.*;
 
 @Entity
-@Table(name = AddressFields.ADDRESSES)
+@Table(name = ADDRESSES)
 public class Address {
 
-	@Id
-	@GeneratedValue
-	@Column(name = AddressFields.ADDRESS_ID)
-	private Integer id;
+    @Id
+    @GeneratedValue
+    @Column(name = ADDRESS_ID)
+    private Long id;
 
-	@Column(name = AddressFields.STREET)
-	private String street;
+    @Column(name = STREET)
+    private String street;
 
-	@Column(name = AddressFields.ZIPCODE)
-	private String zipCode;
+    @Column(name = ZIPCODE)
+    private String zipCode;
 
-	@Column(name = AddressFields.CITY)
-	private String city;
+    @Column(name = CITY)
+    private String city;
 
-	public Integer getId() {
-		return id;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public String getStreet() {
-		return street;
-	}
+    public String getStreet() {
+	return street;
+    }
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
+    public void setStreet(String street) {
+	this.street = street;
+    }
 
-	public String getZipCode() {
-		return zipCode;
-	}
+    public String getZipCode() {
+	return zipCode;
+    }
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
+    public void setZipCode(String zipCode) {
+	this.zipCode = zipCode;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getCity() {
+	return city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setCity(String city) {
+	this.city = city;
+    }
 
 }
