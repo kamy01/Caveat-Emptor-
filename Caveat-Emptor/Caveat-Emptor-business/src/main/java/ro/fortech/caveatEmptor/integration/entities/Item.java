@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -68,13 +69,13 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Bid> bids;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = ITEM_SELLER, joinColumns = {
 	    @JoinColumn(name = ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
 		    @JoinColumn(name = USER_ID, nullable = false, updatable = false) })
     private List<User> sellers;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = ITEM_BUYER, joinColumns = {
 	    @JoinColumn(name = ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
 		    @JoinColumn(name = USER_ID, nullable = false, updatable = false) })

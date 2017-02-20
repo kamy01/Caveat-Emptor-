@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -62,10 +63,10 @@ public class User {
     @JoinColumn(name = SHIPPING_ADDRESS_ID)
     private Address shippingAddress;
 
-    @ManyToMany(mappedBy = "sellers")
+    @ManyToMany(mappedBy = "sellers", fetch = FetchType.LAZY)
     private List<Item> itemsSold;
 
-    @ManyToMany(mappedBy = "buyers")
+    @ManyToMany(mappedBy = "buyers", fetch = FetchType.LAZY)
     private List<Item> itemsBought;
 
     public User() {

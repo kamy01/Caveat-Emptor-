@@ -24,7 +24,7 @@ function config($routeProvider) {
 		controllerAs : 'ctrl'
 	}).when('/items', {
 		templateUrl : 'views/items.html',
-		controller : '',
+		controller : 'itemsController',
 		controllerAs : 'ctrl'
 	}).when('/categories', {
 		templateUrl : 'views/categories.html',
@@ -48,11 +48,13 @@ function run($rootScope, $location, $cookies, $http) {
 
 	$rootScope.globals = $cookies.getObject('globals') || {};
 	if ($rootScope.globals.currentUser) {
-		$http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authData;
+		$http.defaults.headers.common['Authorization'] = 'Basic '
+				+ $rootScope.globals.currentUser.authData;
 	}
 
 	$rootScope.$on('$locationChangeStart', function(event, next, current) {
-		var restrictedPage = $.inArray($location.path(), [ '/login', '/register' ]) === -1;
+		var restrictedPage = $.inArray($location.path(), [ '/login',
+				'/register' ]) === -1;
 		var loggedIn = $rootScope.globals.currentUser;
 		if (restrictedPage && !loggedIn) {
 			$location.path('/login');

@@ -2,7 +2,6 @@ package ro.fortech.caveatEmptor.business.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ro.fortech.caveatEmptor.business.transformers.UserTransformer;
 import ro.fortech.caveatEmptor.dto.UserDto;
 import ro.fortech.caveatEmptor.exceptions.UserException;
 import ro.fortech.caveatEmptor.integration.entities.User;
@@ -41,13 +41,13 @@ public class UserService {
 	    throw new UserException("Provided credentials are not valid!");
 	}
 
-	return createUserDto(user);
+	return new UserTransformer().entityToDto(user, false, false);
     }
 
     public List<UserDto> getAll() throws Exception {
 	List<UserDto> userDtos = new ArrayList<>();
 
-	userDtos = userRepository.getAllUsers().stream().map(user -> createUserDto(user)).collect(Collectors.toList());
+	userDtos = new UserTransformer().entityToDtoList(userRepository.getAllUsers(), true, false);
 
 	if (userDtos == null || userDtos.isEmpty()) {
 	    throw new UserException("No users found");
@@ -58,7 +58,9 @@ public class UserService {
 
     public Long createUser(UserDto userDto) throws Exception {
 	this.validate(userDto, "create");
-	return userRepository.createUser(createUserEntity(userDto));
+	User user = new UserTransformer().dtoToEntity(userDto, false, false);
+	user.setPassword(encoder.encode(user.getPassword()));
+	return userRepository.saveUser(user);
     }
 
     private void validate(UserDto userDto, String method) throws Exception {
@@ -80,30 +82,6 @@ public class UserService {
 	    throw new Exception("Internal server error!");
 	}
 
-    }
-
-    private UserDto createUserDto(User user) {
-	UserDto userDto = new UserDto();
-	userDto.setId(user.getId());
-	userDto.setUsername(user.getUsername());
-	userDto.setAdmin(user.isAdmin());
-	userDto.setEmail(user.getEmail());
-	userDto.setFirstName(user.getFirstName());
-	userDto.setLastName(user.getLastName());
-	return userDto;
-    }
-
-    private User createUserEntity(UserDto userDto) {
-
-	User user = new User();
-	user.setAdmin(false);
-	user.setUsername(userDto.getUsername());
-	user.setFirstName(userDto.getFirstName());
-	user.setLastName(userDto.getLastName());
-	user.setEmail(userDto.getEmail());
-	user.setPassword(encoder.encode(userDto.getPassword()));
-
-	return user;
     }
 
 }

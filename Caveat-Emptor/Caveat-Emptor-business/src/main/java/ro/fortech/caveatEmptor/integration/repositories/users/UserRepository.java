@@ -1,6 +1,5 @@
 package ro.fortech.caveatEmptor.integration.repositories.users;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +7,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -59,15 +59,17 @@ public class UserRepository {
 	Transaction tx = session.beginTransaction();
 	Query query = session.createQuery(UserQueries.GET_ALL_USERS);
 	users = query.list();
+
+	for (User user : users) {
+	    Hibernate.initialize(user.getItemsBought());
+	    Hibernate.initialize(user.getItemsSold());
+	}
+
 	session.flush();
 	tx.commit();
 	session.close();
 
 	logger.info("<<<END>>> UserRepository.getAllUsers");
-
-	if (users == null) {
-	    users = new ArrayList<>();
-	}
 
 	return users;
     }
@@ -93,7 +95,7 @@ public class UserRepository {
 	return user;
     }
 
-    public Long createUser(User user) throws Exception {
+    public Long saveUser(User user) throws Exception {
 	logger.info("<<<START>>> UserRepository.createUser with params username: " + user.getUsername()
 		+ ", password: *********** , email: " + user.getEmail());
 

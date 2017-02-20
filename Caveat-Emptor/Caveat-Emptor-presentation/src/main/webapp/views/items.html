@@ -1,0 +1,122 @@
+<div>
+ <label for="itemsSelect"> Items to: </label>
+ <select name="itemsSelect" ng-model="ctrl.itemOption" ng-change="ctrl.updateItems()">
+   <option value="">---Please select---</option>
+   <option value="sell">Sell</option>
+   <option value="buy">Buy</option>
+ </select>
+ <input type="button" value="Define new item" ng-if="ctrl.itemOption == 'sell'"></input>
+    
+</div>
+
+<div ng-if="ctrl.noItemsFound">
+	<h3>No Items have been found for the specified selection!</h3>
+</div>
+
+<form class="table-responsive" ng-if="ctrl.itemOption != '' && ctrl.items.length ">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th ng-click="ctrl.setSortType('name', $event)" class="colMaxWidth">
+					<input type="text" placeholder="Name" ng-model="searchFilter.name"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'name' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'name' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-click="ctrl.setSortType('categories', $event)" class="colMaxWidth">
+					<input type="text" placeholder="Categories" ng-model="searchFilter.categories"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'categories' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'categories' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-click="ctrl.setSortType('initialPrice', $event)" class="colMaxWidth" >
+					<input type="text" placeholder="Initial Price" ng-model="searchFilter.initialPrice"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'initialPrice' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'initialPrice' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-click="ctrl.setSortType('bestBid', $event)" class="colMaxWidth" >
+					<input type="text" placeholder="Best Bid" ng-model="searchFilter.bestBid"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'bestBid' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'bestBid' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-if="ctrl.itemOption == 'buy'" ng-click="ctrl.setSortType('yourBid', $event)" class="colMaxWidth" >
+					<input type="text" placeholder="Your Bid" ng-model="searchFilter.yourBid"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'yourBid' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'yourBid' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-click="ctrl.setSortType('noBids', $event)" class="colMaxWidth" >
+					<input type="text" placeholder="# bids" ng-model="searchFilter.noBids"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'noBids' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'noBids' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-click="ctrl.setSortType('openingDate', $event)" class="colMaxWidth" >
+					<input type="text" placeholder="Opening Date" ng-model="searchFilter.openingDate"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'openingDate' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'openingDate' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-click="ctrl.setSortType('closingDate', $event)" class="colMaxWidth" >
+					<input type="text" placeholder="Closing Date" ng-model="searchFilter.closingDate"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'closingDate' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'closingDate' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-click="ctrl.setSortType('status', $event)" class="colMaxWidth" >
+					<input type="text" placeholder="status" ng-model="searchFilter.status"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'status' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'status' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th ng-click="ctrl.setSortType('winner', $event)" class="colMaxWidth" >
+					<input type="text" placeholder="Winner" ng-model="searchFilter.winner"></input>
+					<span>
+						<span ng-if="ctrl.getSortType() == 'winner' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
+						<span ng-if="ctrl.getSortType() == 'winner' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</span>
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr dir-paginate="item in ctrl.items | filter:searchFilter | orderBy:ctrl.getSortType():ctrl.isReverse() | itemsPerPage:ctrl.itemsPerPage">
+				<td>{{item.name}}</td>
+				<td>{{item.categories}}</td>
+				<td>{{item.initialPrice | currency}}</td>
+				<td>{{item.bestBid}}</td>
+				<td ng-if="ctrl.itemOption == 'buy'">Your Bid</td>
+				<td>{{item.bids == null ? 0 : item.bids.length}}</td>
+				<td>{{item.startDate}}</span></td>
+				<td>{{item.endDate}}</td>
+				<td>{{item.state}}</td>
+				<td>Winner</td>
+				<td>
+					<div ng-if="ctrl.itemOption == 'buy'">
+						<input type="button" value="Edit"></input>
+					</div>
+					<div ng-if="ctrl.itemOption == 'sell'">
+						<input type="button" value="Close"></input>
+						<input type="button" value="Abandon"></input>
+						<input type="button" value="Change"></input>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="text-center">
+		<dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+	</div>
+	
+</form>

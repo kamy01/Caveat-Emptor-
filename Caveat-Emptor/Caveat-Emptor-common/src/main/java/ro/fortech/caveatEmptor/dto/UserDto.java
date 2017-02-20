@@ -58,7 +58,7 @@ public class UserDto implements Serializable {
     }
 
     public String getFullName() {
-	return this.firstName + " " + this.lastName;
+	return String.join(" ", this.firstName, this.lastName);
     }
 
     public String getUsername() {

@@ -20,7 +20,7 @@ public class ItemDto implements Serializable {
     private Date endDate;
     private String state;
     private Timestamp approvalDateTime;
-    private List<Long> categories;
+    private List<CategoryDto> categories;
     private BidDto successfullBid;
     private List<BidDto> bids;
     private List<UserDto> sellers;
@@ -109,11 +109,11 @@ public class ItemDto implements Serializable {
 	this.approvalDateTime = approvalDateTime;
     }
 
-    public List<Long> getCategories() {
+    public List<CategoryDto> getCategories() {
 	return categories;
     }
 
-    public void setCategories(List<Long> categories) {
+    public void setCategories(List<CategoryDto> categories) {
 	this.categories = categories;
     }
 

@@ -26,6 +26,7 @@ function authenticationService($http, $cookies, $rootScope) {
 		$rootScope.globals = {
 			currentUser : {
 				username : username,
+				userId: userResponse.id,
 				authData : authData,
 				isAdmin : userResponse.admin
 			},
