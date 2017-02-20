@@ -2,8 +2,8 @@ package ro.fortech.caveatEmptor.integration.repositories.categories;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -32,8 +32,8 @@ public class CategoryRepository {
 	Session session = sessionFactory.openSession();
 	Transaction tx = session.beginTransaction();
 
-	categories = (List<Category>) session.createCriteria(Category.class).add(Restrictions.isNull("parent")).list();
-	categories = categories.parallelStream().distinct().collect(Collectors.toList());
+	categories = (List<Category>) session.createCriteria(Category.class).add(Restrictions.isNull("parent"))
+		.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
 	session.flush();
 	tx.commit();

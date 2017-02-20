@@ -10,7 +10,7 @@ public class CategoryDto implements Serializable {
 
     private Long id;
     private String name;
-    private Long parentId;
+    private CategoryDto parent;
     private List<CategoryDto> children;
 
     public CategoryDto() {
@@ -37,12 +37,12 @@ public class CategoryDto implements Serializable {
 	this.name = name;
     }
 
-    public Long getParentId() {
-	return parentId;
+    public CategoryDto getParent() {
+	return parent;
     }
 
-    public void setParentId(Long parent) {
-	this.parentId = parent;
+    public void setParent(CategoryDto parent) {
+	this.parent = parent;
     }
 
     public List<CategoryDto> getChildren() {
