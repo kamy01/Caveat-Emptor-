@@ -131,4 +131,26 @@ public class UserRepository {
 	return id;
     }
 
+    public User enableUser(UserDto userDto) {
+	logger.info("<<<START>>> UserRepository.enableUser with params id: " + userDto.getId());
+
+	User user = null;
+
+	Session session = sessionFactory.openSession();
+	Transaction tx = session.beginTransaction();
+	user = session.get(User.class, userDto.getId());
+
+	// TODO Update Users table to support enabled functionality
+	// user.setEnabled(userDto.isEnabled());
+	// session.update(user);
+
+	session.flush();
+	tx.commit();
+	session.close();
+
+	logger.info("<<<END>>> UserRepository.enableUser");
+
+	return user;
+    }
+
 }

@@ -43,13 +43,12 @@ public class UserController {
 
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{userId}")
-    public @ResponseBody ResponseDto<UserDto> updateUserById(@PathVariable("userId") Long userId,
-	    @RequestBody UserDto userDto) {
+    @RequestMapping(method = RequestMethod.POST, value = "/enable")
+    public @ResponseBody ResponseDto<UserDto> updateUserById(@RequestBody UserDto userDto) {
 	ResponseDto<UserDto> response = new ResponseDto<>();
 
 	try {
-	    response.setData(null);
+	    response.setData(userService.enableUser(userDto));
 	    response.setSuccess(true);
 	} catch (Exception e) {
 	    response.setSuccess(false);

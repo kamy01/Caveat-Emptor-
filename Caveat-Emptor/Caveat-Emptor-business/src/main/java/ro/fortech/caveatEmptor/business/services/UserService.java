@@ -56,6 +56,19 @@ public class UserService {
 	return userDtos;
     }
 
+    public UserDto enableUser(UserDto userDto) throws Exception {
+	this.validate(userDto, "enable");
+
+	User user = userRepository.enableUser(userDto);
+
+	if (user == null || user.getId() == null) {
+	    throw new UserException("Provided credentials are not valid!");
+	}
+
+	return new UserTransformer().entityToDto(user, false, false);
+
+    }
+
     public Long createUser(UserDto userDto) throws Exception {
 	this.validate(userDto, "create");
 	User user = new UserTransformer().dtoToEntity(userDto, false, false);
@@ -76,6 +89,10 @@ public class UserService {
 		    || ObjectUtils.isNullOrEmpty(userDto.getEmail())) {
 		throw new UserException("Provided credentials are not valid!");
 	    }
+	    break;
+	}
+	case "enable": {
+
 	    break;
 	}
 	default:
