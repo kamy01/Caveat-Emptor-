@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ro.fortech.caveatEmptor.business.transformers.UserTransformer;
 import ro.fortech.caveatEmptor.dto.UserDto;
@@ -17,88 +18,106 @@ import ro.fortech.caveatEmptor.integration.repositories.users.UserRepository;
 import ro.fortech.caveatEmptor.utils.ObjectUtils;
 
 @Service
+@Transactional
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    private BCryptPasswordEncoder encoder;
+	@Autowired
+	private MailService eMailService;
 
-    @PostConstruct
-    public void init() {
-	encoder = new BCryptPasswordEncoder();
-    }
+	private BCryptPasswordEncoder encoder;
 
-    public UserDto authenticateUser(UserDto userDto) throws Exception {
-	this.validate(userDto, "login");
-	User user = userRepository.getUserByUsername(userDto);
-
-	if (user == null || user.getId() == null) {
-	    throw new UserException("Provided credentials are not valid!");
+	@PostConstruct
+	public void init() {
+		encoder = new BCryptPasswordEncoder();
 	}
 
-	if (!encoder.matches(userDto.getPassword(), user.getPassword())) {
-	    throw new UserException("Provided credentials are not valid!");
+	public UserDto authenticateUser(UserDto userDto) throws Exception {
+		this.validate(userDto, "login");
+		User user = userRepository.getUserByUsername(userDto);
+
+		if (user == null || user.getId() == null) {
+			throw new UserException("Provided credentials are not valid!");
+		}
+
+		// if (!user.isEnabled()) {
+		// throw new UserException(
+		// "Account has not been activated yet. Please activate using the
+		// provided link in the mail!");
+		// }
+
+		if (!encoder.matches(userDto.getPassword(), user.getPassword())) {
+			throw new UserException("Provided credentials are not valid!");
+		}
+
+		return new UserTransformer().entityToDto(user, false, false);
 	}
 
-	return new UserTransformer().entityToDto(user, false, false);
-    }
+	public List<UserDto> getAll() throws Exception {
+		List<UserDto> userDtos = new ArrayList<>();
 
-    public List<UserDto> getAll() throws Exception {
-	List<UserDto> userDtos = new ArrayList<>();
+		userDtos = new UserTransformer().entityToDtoList(userRepository.getAllUsers(), true, false);
 
-	userDtos = new UserTransformer().entityToDtoList(userRepository.getAllUsers(), true, false);
+		if (userDtos == null || userDtos.isEmpty()) {
+			throw new UserException("No users found");
+		}
 
-	if (userDtos == null || userDtos.isEmpty()) {
-	    throw new UserException("No users found");
+		return userDtos;
 	}
 
-	return userDtos;
-    }
+	public UserDto enableUser(UserDto userDto) throws Exception {
+		this.validate(userDto, "enable");
 
-    public UserDto enableUser(UserDto userDto) throws Exception {
-	this.validate(userDto, "enable");
+		User user = userRepository.enableUser(userDto);
 
-	User user = userRepository.enableUser(userDto);
+		if (user == null || user.getId() == null) {
+			throw new UserException("Provided credentials are not valid!");
+		}
 
-	if (user == null || user.getId() == null) {
-	    throw new UserException("Provided credentials are not valid!");
+		return new UserTransformer().entityToDto(user, false, false);
+
 	}
 
-	return new UserTransformer().entityToDto(user, false, false);
+	public Long registerUser(UserDto userDto) throws Exception {
+		this.validate(userDto, "register");
 
-    }
+		userDto.setEnabled(false);
 
-    public Long createUser(UserDto userDto) throws Exception {
-	this.validate(userDto, "create");
-	User user = new UserTransformer().dtoToEntity(userDto, false, false);
-	user.setPassword(encoder.encode(user.getPassword()));
-	return userRepository.saveUser(user);
-    }
+		User user = new UserTransformer().dtoToEntity(userDto, false, false);
+		user.setPassword(encoder.encode(user.getPassword()));
+		Long userId = userRepository.saveUser(user);
+		userDto.setId(userId);
 
-    private void validate(UserDto userDto, String method) throws Exception {
-	switch (method) {
-	case "login": {
-	    if (ObjectUtils.isNullOrEmpty(userDto.getUsername()) || ObjectUtils.isNullOrEmpty(userDto.getPassword())) {
-		throw new UserException("Provided credentials are not valid!");
-	    }
-	    break;
-	}
-	case "create": {
-	    if (ObjectUtils.isNullOrEmpty(userDto.getUsername()) || ObjectUtils.isNullOrEmpty(userDto.getPassword())
-		    || ObjectUtils.isNullOrEmpty(userDto.getEmail())) {
-		throw new UserException("Provided credentials are not valid!");
-	    }
-	    break;
-	}
-	case "enable": {
+		eMailService.sendEmail(userDto);
 
-	    break;
-	}
-	default:
-	    throw new Exception("Internal server error!");
+		return userId;
 	}
 
-    }
+	private void validate(UserDto userDto, String method) throws Exception {
+		switch (method) {
+		case "login": {
+			if (ObjectUtils.isNullOrEmpty(userDto.getUsername()) || ObjectUtils.isNullOrEmpty(userDto.getPassword())) {
+				throw new UserException("Provided credentials are not valid!");
+			}
+			break;
+		}
+		case "register": {
+			if (ObjectUtils.isNullOrEmpty(userDto.getUsername()) || ObjectUtils.isNullOrEmpty(userDto.getPassword())
+					|| ObjectUtils.isNullOrEmpty(userDto.getEmail())) {
+				throw new UserException("Provided credentials are not valid!");
+			}
+			break;
+		}
+		case "enable": {
+
+			break;
+		}
+		default:
+			throw new Exception("Internal server error!");
+		}
+
+	}
 
 }

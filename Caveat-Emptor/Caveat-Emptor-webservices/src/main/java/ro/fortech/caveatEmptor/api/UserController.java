@@ -57,11 +57,11 @@ public class UserController {
 	return response;
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = { "application/json" })
-    public @ResponseBody ResponseDto<Long> createUser(@RequestBody UserDto userDto) {
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
+    public @ResponseBody ResponseDto<Long> registerUser(@RequestBody UserDto userDto) {
 	ResponseDto<Long> response = new ResponseDto<>();
 	try {
-	    response.setData(userService.createUser(userDto));
+	    response.setData(userService.registerUser(userDto));
 	    response.setSuccess(true);
 	} catch (Exception e) {
 	    response.setSuccess(false);

@@ -19,35 +19,35 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 // @EnableJpaRepositories("ro.fortech.caveatEmptor.integration.repositories")
 public class PersistenceJndiConfig {
 
-    @Bean
-    public LocalSessionFactoryBean sessionFactory() throws NamingException, IOException {
-	LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-	sessionFactoryBean.setPackagesToScan("ro.fortech.caveatEmptor.integration.entities");
-	sessionFactoryBean.setDataSource(dataSource());
-	sessionFactoryBean.setHibernateProperties(getHibernateProperties());
-	sessionFactoryBean.afterPropertiesSet();
-	return sessionFactoryBean;
-    }
+	@Bean
+	public LocalSessionFactoryBean sessionFactory() throws NamingException, IOException {
+		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+		sessionFactoryBean.setPackagesToScan("ro.fortech.caveatEmptor.integration.entities");
+		sessionFactoryBean.setDataSource(dataSource());
+		sessionFactoryBean.setHibernateProperties(getHibernateProperties());
+		sessionFactoryBean.afterPropertiesSet();
+		return sessionFactoryBean;
+	}
 
-    @Bean
-    public DataSource dataSource() throws NamingException {
-	return (DataSource) new JndiTemplate().lookup("java:/cae-mSQL-DS");
-    }
+	@Bean
+	public DataSource dataSource() throws NamingException {
+		return (DataSource) new JndiTemplate().lookup("java:/cae-mSQL-DS");
+	}
 
-    @Bean
-    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-	HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-	transactionManager.setSessionFactory(sessionFactory);
-	return transactionManager;
-    }
+	@Bean
+	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+		transactionManager.setSessionFactory(sessionFactory);
+		return transactionManager;
+	}
 
-    private Properties getHibernateProperties() {
-	Properties props = new Properties();
-	// props.put("hibernate.hbm2ddl.auto", "create");
-	props.put("hibernate.show_sql", "true");
-	props.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-	props.put("hibernate.current_session_context_class", "thread");
-	return props;
-    }
+	private Properties getHibernateProperties() {
+		Properties props = new Properties();
+		// props.put("hibernate.hbm2ddl.auto", "create");
+		props.put("hibernate.show_sql", "true");
+		props.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+		props.put("hibernate.current_session_context_class", "thread");
+		return props;
+	}
 
 }

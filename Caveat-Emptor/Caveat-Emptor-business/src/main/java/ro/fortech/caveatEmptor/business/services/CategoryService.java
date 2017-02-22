@@ -12,11 +12,11 @@ import ro.fortech.caveatEmptor.integration.repositories.categories.CategoryRepos
 @Service
 public class CategoryService {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 
-    public List<CategoryDto> getAllCategories() {
-	return new CategoryTransformer().entityToDtoList(categoryRepository.getAllCategories(), true, true);
-    }
+	public List<CategoryDto> getAllCategories() {
+		return new CategoryTransformer().entityToDtoList(categoryRepository.getAllCategories(), true, true);
+	}
 
 }

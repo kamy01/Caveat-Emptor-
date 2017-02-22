@@ -14,26 +14,26 @@ import ro.fortech.caveatEmptor.integration.repositories.items.ItemRepository;
 @Service
 public class ItemService {
 
-    @Autowired
-    private ItemRepository itemRepository;
+	@Autowired
+	private ItemRepository itemRepository;
 
-    public List<ItemDto> getAllItemsWithCriteria(ItemCriteriaDto itemCriteriaDto) throws Exception {
-	switch (itemCriteriaDto.getOption()) {
-	case "buy":
-	    itemCriteriaDto.setOption("buyers");
-	    break;
-	case "sell":
-	    itemCriteriaDto.setOption("sellers");
-	    break;
+	public List<ItemDto> getAllItemsWithCriteria(ItemCriteriaDto itemCriteriaDto) throws Exception {
+		switch (itemCriteriaDto.getOption()) {
+		case "buy":
+			itemCriteriaDto.setOption("buyers");
+			break;
+		case "sell":
+			itemCriteriaDto.setOption("sellers");
+			break;
 
-	default:
-	    break;
+		default:
+			break;
+		}
+		List<Item> allItemsBought = itemRepository.getAllUserItems(itemCriteriaDto);
+
+		List<ItemDto> itemDtos = new ItemTransformer().entityToDtoList(allItemsBought, true, false);
+
+		return itemDtos;
 	}
-	List<Item> allItemsBought = itemRepository.getAllUserItems(itemCriteriaDto);
-
-	List<ItemDto> itemDtos = new ItemTransformer().entityToDtoList(allItemsBought, true, false);
-
-	return itemDtos;
-    }
 
 }
