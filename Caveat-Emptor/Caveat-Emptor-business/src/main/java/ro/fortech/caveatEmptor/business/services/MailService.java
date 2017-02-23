@@ -1,49 +1,24 @@
 package ro.fortech.caveatEmptor.business.services;
 
+import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ro.fortech.caveatEmptor.dto.RegistrationDto;
-import ro.fortech.caveatEmptor.dto.UserDto;
+import ro.fortech.caveatEmptor.dto.EmailDto;
 
 @Service
 public class MailService {
 
-	@Autowired
-	private RegistrationService registrationService;
-
-	private static String EMAIL_BODY;
-
-	@PostConstruct
-	public void init() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("<h3>Hello %s,</h3>");
-		sb.append("<p>We are glad you have registered to Caveat Emptor.</p></br>");
-		sb.append(
-				"<p>Please, activate your account by clicking this <a href=\"%s\">link</a> or use the following one in your browser: </p></br>");
-		sb.append("<p>%s</p></br>");
-		sb.append("<p>The activation link will expire after 24 hours.<p></br>");
-		sb.append("<p>Best regards,<p></br>");
-		sb.append("<p>The Caveat Emptor team<p></br>");
-
-		EMAIL_BODY = sb.toString();
-	}
-
-	public void sendEmail(UserDto userDto) throws Exception {
-
-		RegistrationDto registration = registrationService.createRegistration(userDto);
-		String activationLink = "http://localhost:8080/Caveat-Emptor-webservices/ws/activation/" + registration.getId();
-
-		String emailBody = String.format(EMAIL_BODY, userDto.getFullName(), activationLink, activationLink);
+	public void sendEmail(EmailDto emailDto) throws Exception {
 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -54,13 +29,24 @@ public class MailService {
 		props.put("mail.smtp.socketFactory.fallback", "true");
 
 		Session mailSession = Session.getDefaultInstance(props);
-		mailSession.setDebug(true);
+		mailSession.setDebug(false);
 
 		Message mailMessage = new MimeMessage(mailSession);
 		mailMessage.setFrom(new InternetAddress("caveat.emptor17@gmail.com"));
-		mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(userDto.getEmail()));
-		mailMessage.setContent(emailBody, "text/html");
-		mailMessage.setSubject("Account activation");
+
+		List<InternetAddress> addresses = emailDto.getRecipients().stream().map(email -> {
+			try {
+				return new InternetAddress(email);
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}).collect(Collectors.toList());
+
+		mailMessage.addRecipients(Message.RecipientType.TO, addresses.toArray(new InternetAddress[] {}));
+		mailMessage.setContent(emailDto.getBody(), "text/html");
+		mailMessage.setSubject(emailDto.getSubject());
 
 		Transport transport = mailSession.getTransport("smtp");
 		transport.connect("smtp.gmail.com", "caveat.emptor17", "caveatEmptor17");

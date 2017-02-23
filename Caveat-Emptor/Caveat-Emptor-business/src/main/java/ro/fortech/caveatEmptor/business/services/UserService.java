@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ro.fortech.caveatEmptor.business.transformers.UserTransformer;
+import ro.fortech.caveatEmptor.dto.EmailDto;
+import ro.fortech.caveatEmptor.dto.RegistrationDto;
 import ro.fortech.caveatEmptor.dto.UserDto;
 import ro.fortech.caveatEmptor.exceptions.UserException;
 import ro.fortech.caveatEmptor.integration.entities.User;
@@ -25,13 +27,30 @@ public class UserService {
 	private UserRepository userRepository;
 
 	@Autowired
-	private MailService eMailService;
+	private MailService mailService;
+
+	@Autowired
+	private RegistrationService registrationService;
 
 	private BCryptPasswordEncoder encoder;
+
+	private static String EMAIL_BODY;
 
 	@PostConstruct
 	public void init() {
 		encoder = new BCryptPasswordEncoder();
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("<h3>Hello %s,</h3>");
+		sb.append("<p>We are glad you have registered to Caveat Emptor.</p></br>");
+		sb.append(
+				"<p>Please, activate your account by clicking this <a href=\"%s\">link</a> or use the following one in your browser: </p></br>");
+		sb.append("<p>%s</p></br>");
+		sb.append("<p>The activation link will expire after 24 hours.<p></br>");
+		sb.append("<p>Best regards,<p></br>");
+		sb.append("<p>The Caveat Emptor team<p></br>");
+
+		EMAIL_BODY = sb.toString();
 	}
 
 	public UserDto authenticateUser(UserDto userDto) throws Exception {
@@ -80,6 +99,7 @@ public class UserService {
 
 	}
 
+	@Transactional
 	public Long registerUser(UserDto userDto) throws Exception {
 		this.validate(userDto, "register");
 
@@ -90,7 +110,18 @@ public class UserService {
 		Long userId = userRepository.saveUser(user);
 		userDto.setId(userId);
 
-		eMailService.sendEmail(userDto);
+		RegistrationDto registration = registrationService.createRegistration(userDto);
+
+		String activationLink = "http://localhost:8080/Caveat-Emptor-webservices/ws/activation/" + registration.getId();
+		String emailBody = String.format(EMAIL_BODY, userDto.getFullName(), activationLink, activationLink);
+		String emailSubject = "Caveat Emptor - Account activation!";
+
+		EmailDto emailDto = new EmailDto();
+		emailDto.getRecipients().add(userDto.getEmail());
+		emailDto.setBody(emailBody);
+		emailDto.setSubject(emailSubject);
+
+		mailService.sendEmail(emailDto);
 
 		return userId;
 	}
