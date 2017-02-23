@@ -61,11 +61,9 @@ public class UserService {
 			throw new UserException("Provided credentials are not valid!");
 		}
 
-		// if (!user.isEnabled()) {
-		// throw new UserException(
-		// "Account has not been activated yet. Please activate using the
-		// provided link in the mail!");
-		// }
+		if (!user.isEnabled()) {
+			throw new UserException("Account is either not activated or disabled by an admin!");
+		}
 
 		if (!encoder.matches(userDto.getPassword(), user.getPassword())) {
 			throw new UserException("Provided credentials are not valid!");
