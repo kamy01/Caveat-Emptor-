@@ -20,7 +20,7 @@ function UserService($http){
     }
     
     function Create(user) {
-        return $http.post(COMPLETE_USERS_WS_URL, user).then(handleSuccess, handleError('Error creating user'))
+        return $http.post(COMPLETE_USERS_WS_URL + '/register', user).then(handleSuccess, handleError('Error creating user'))
     }
     
     function Update(user) {

@@ -14,7 +14,7 @@ import ro.fortech.caveatEmptor.business.transformers.UserTransformer;
 import ro.fortech.caveatEmptor.dto.EmailDto;
 import ro.fortech.caveatEmptor.dto.RegistrationDto;
 import ro.fortech.caveatEmptor.dto.UserDto;
-import ro.fortech.caveatEmptor.exceptions.UserException;
+import ro.fortech.caveatEmptor.exceptions.CaveatException;
 import ro.fortech.caveatEmptor.integration.entities.User;
 import ro.fortech.caveatEmptor.integration.repositories.users.UserRepository;
 import ro.fortech.caveatEmptor.utils.ObjectUtils;
@@ -58,15 +58,15 @@ public class UserService {
 		User user = userRepository.getUserByUsername(userDto);
 
 		if (user == null || user.getId() == null) {
-			throw new UserException("Provided credentials are not valid!");
+			throw new CaveatException("Provided credentials are not valid!");
 		}
 
 		if (!user.isEnabled()) {
-			throw new UserException("Account is either not activated or disabled by an admin!");
+			throw new CaveatException("Account is either not activated or disabled by an admin!");
 		}
 
 		if (!encoder.matches(userDto.getPassword(), user.getPassword())) {
-			throw new UserException("Provided credentials are not valid!");
+			throw new CaveatException("Provided credentials are not valid!");
 		}
 
 		return new UserTransformer().entityToDto(user, false, false);
@@ -78,7 +78,7 @@ public class UserService {
 		userDtos = new UserTransformer().entityToDtoList(userRepository.getAllUsers(), true, false);
 
 		if (userDtos == null || userDtos.isEmpty()) {
-			throw new UserException("No users found");
+			throw new CaveatException("No users found");
 		}
 
 		return userDtos;
@@ -90,7 +90,7 @@ public class UserService {
 		User user = userRepository.enableUser(userDto);
 
 		if (user == null || user.getId() == null) {
-			throw new UserException("Provided credentials are not valid!");
+			throw new CaveatException("Provided credentials are not valid!");
 		}
 
 		return new UserTransformer().entityToDto(user, false, false);
@@ -128,14 +128,14 @@ public class UserService {
 		switch (method) {
 		case "login": {
 			if (ObjectUtils.isNullOrEmpty(userDto.getUsername()) || ObjectUtils.isNullOrEmpty(userDto.getPassword())) {
-				throw new UserException("Provided credentials are not valid!");
+				throw new CaveatException("Provided credentials are not valid!");
 			}
 			break;
 		}
 		case "register": {
 			if (ObjectUtils.isNullOrEmpty(userDto.getUsername()) || ObjectUtils.isNullOrEmpty(userDto.getPassword())
 					|| ObjectUtils.isNullOrEmpty(userDto.getEmail())) {
-				throw new UserException("Provided credentials are not valid!");
+				throw new CaveatException("Provided credentials are not valid!");
 			}
 			break;
 		}

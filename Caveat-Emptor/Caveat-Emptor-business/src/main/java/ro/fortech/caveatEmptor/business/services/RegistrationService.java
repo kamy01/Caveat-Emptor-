@@ -3,19 +3,20 @@ package ro.fortech.caveatEmptor.business.services;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
-
-import javax.annotation.PostConstruct;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ro.fortech.caveatEmptor.business.transformers.RegistrationTransformer;
 import ro.fortech.caveatEmptor.business.transformers.UserTransformer;
 import ro.fortech.caveatEmptor.dto.RegistrationDto;
 import ro.fortech.caveatEmptor.dto.UserDto;
+import ro.fortech.caveatEmptor.exceptions.CaveatException;
 import ro.fortech.caveatEmptor.integration.entities.Registration;
 import ro.fortech.caveatEmptor.integration.repositories.RegistrationRepository;
+import ro.fortech.caveatEmptor.integration.repositories.users.UserRepository;
+import ro.fortech.caveatEmptor.utils.ObjectUtils;
 
 @Service
 public class RegistrationService {
@@ -23,17 +24,13 @@ public class RegistrationService {
 	@Autowired
 	private RegistrationRepository registrationRepository;
 
-	private BCryptPasswordEncoder encoder;
-
-	@PostConstruct
-	public void init() {
-		encoder = new BCryptPasswordEncoder();
-	}
+	@Autowired
+	private UserRepository userRepository;
 
 	public RegistrationDto createRegistration(UserDto userDto) throws Exception {
 
 		Registration registration = new Registration();
-		registration.setId(encoder.encode(userDto.getUsername()));
+		registration.setId(UUID.randomUUID().toString());
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
@@ -49,6 +46,25 @@ public class RegistrationService {
 		registrationRepository.saveRegistration(registration);
 
 		return new RegistrationTransformer().entityToDto(registration, true, false);
+	}
+
+	public boolean activateRegistration(String registrationId) throws Exception {
+
+		Registration registration = registrationRepository.getRegistrationById(registrationId);
+
+		if (registration == null || ObjectUtils.isNullOrEmpty(registration.getId())) {
+			throw new CaveatException("Registration not found!!");
+		}
+
+		RegistrationDto registrationDto = new RegistrationTransformer().entityToDto(registration, false, false);
+		registrationDto.setEnabled(false);
+		registrationRepository.enableRegistration(registrationDto);
+
+		UserDto userDto = new UserTransformer().entityToDto(registration.getUser(), false, false);
+		userDto.setEnabled(true);
+		userRepository.enableUser(userDto);
+
+		return true;
 	}
 
 }

@@ -21,102 +21,96 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ro.fortech.caveatEmptor.dto.ItemCriteriaDto;
-import ro.fortech.caveatEmptor.exceptions.UserException;
+import ro.fortech.caveatEmptor.exceptions.CaveatException;
 import ro.fortech.caveatEmptor.integration.entities.Item;
 
 @Repository
 public class ItemRepository {
 
-    Logger logger = LoggerFactory.getLogger(ItemRepository.class);
+	Logger logger = LoggerFactory.getLogger(ItemRepository.class);
 
-    @Autowired
-    private SessionFactory sessionFactory;
+	@Autowired
+	private SessionFactory sessionFactory;
 
-    @SuppressWarnings("unchecked")
-    public List<Item> getAllUserItems(ItemCriteriaDto itemCriteriaDto) throws Exception {
-	List<Item> items = null;
+	public List<Item> getAllUserItems(ItemCriteriaDto itemCriteriaDto) throws Exception {
+		List<Item> items = null;
 
-	Session session = sessionFactory.openSession();
-	Transaction tx = session.beginTransaction();
-	try {
-	    // Query query =
-	    // session.createQuery(ItemQueries.GET_ITEMS_BOUGHT_BY_USER).setParameter("userId",
-	    // userId);
-	    // items = query.list();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		try {
+			Criteria citeria = session.createCriteria(Item.class, "item")
+					.createAlias("item." + itemCriteriaDto.getOption(), "itemCriteriaOption", JoinType.LEFT_OUTER_JOIN)
+					.add(Restrictions.eq("itemCriteriaOption.id", itemCriteriaDto.getId()))
+					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
-	    Criteria citeria = session.createCriteria(Item.class, "item")
-		    .createAlias("item." + itemCriteriaDto.getOption(), "itemCriteriaOption", JoinType.LEFT_OUTER_JOIN)
-		    .add(Restrictions.eq("itemCriteriaOption.id", itemCriteriaDto.getId()))
-		    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			items = citeria.list();
 
-	    items = citeria.list();
+			for (Item item : items) {
+				Hibernate.initialize(item.getCategories());
+				Hibernate.initialize(item.getBids());
+				Hibernate.initialize(item.getSuccessfullBid());
+				Hibernate.initialize(item.getBuyers());
+				Hibernate.initialize(item.getSellers());
+			}
 
-	    for (Item item : items) {
-		Hibernate.initialize(item.getCategories());
-		Hibernate.initialize(item.getBids());
-		Hibernate.initialize(item.getSuccessfullBid());
-		Hibernate.initialize(item.getBuyers());
-		Hibernate.initialize(item.getSellers());
-	    }
+			session.flush();
+			tx.commit();
+		} catch (ConstraintViolationException e) {
+			System.out.println();
+			Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
+			Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
+			if (iterator.hasNext()) {
+				ConstraintViolation<?> next = iterator.next();
+				throw new CaveatException(next.getMessage());
+			}
+		} catch (Exception e) {
+			throw new CaveatException(e.getMessage());
+		} finally {
+			try {
+				session.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
-	    session.flush();
-	    tx.commit();
-	} catch (ConstraintViolationException e) {
-	    System.out.println();
-	    Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-	    Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
-	    if (iterator.hasNext()) {
-		ConstraintViolation<?> next = iterator.next();
-		throw new UserException(next.getMessage());
-	    }
-	} catch (Exception e) {
-	    throw new UserException(e.getMessage());
-	} finally {
-	    try {
-		session.close();
-	    } catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
+		if (items == null) {
+			items = new ArrayList<>();
+		}
+
+		return items;
 	}
 
-	if (items == null) {
-	    items = new ArrayList<>();
+	public Long saveItem(Item item) throws Exception {
+		Long id = -1L;
+
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		try {
+			id = (Long) session.save(item);
+			session.flush();
+			tx.commit();
+		} catch (ConstraintViolationException e) {
+			System.out.println();
+			Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
+			Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
+			if (iterator.hasNext()) {
+				ConstraintViolation<?> next = iterator.next();
+				throw new CaveatException(next.getMessage());
+			}
+		} catch (Exception e) {
+			throw new CaveatException(e.getMessage());
+		} finally {
+			try {
+				session.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return id;
+
 	}
-
-	return items;
-    }
-
-    public Long saveItem(Item item) throws Exception {
-	Long id = -1L;
-
-	Session session = sessionFactory.openSession();
-	Transaction tx = session.beginTransaction();
-	try {
-	    id = (Long) session.save(item);
-	    session.flush();
-	    tx.commit();
-	} catch (ConstraintViolationException e) {
-	    System.out.println();
-	    Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-	    Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
-	    if (iterator.hasNext()) {
-		ConstraintViolation<?> next = iterator.next();
-		throw new UserException(next.getMessage());
-	    }
-	} catch (Exception e) {
-	    throw new UserException(e.getMessage());
-	} finally {
-	    try {
-		session.close();
-	    } catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
-	}
-
-	return id;
-
-    }
 
 }

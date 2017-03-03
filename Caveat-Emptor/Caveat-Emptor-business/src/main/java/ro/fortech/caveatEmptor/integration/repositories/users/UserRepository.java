@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ro.fortech.caveatEmptor.dto.UserDto;
-import ro.fortech.caveatEmptor.exceptions.UserException;
+import ro.fortech.caveatEmptor.exceptions.CaveatException;
 import ro.fortech.caveatEmptor.integration.entities.User;
 import ro.fortech.caveatEmptor.integration.queries.UserQueries;
 
@@ -113,10 +113,10 @@ public class UserRepository {
 			Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
 			if (iterator.hasNext()) {
 				ConstraintViolation<?> next = iterator.next();
-				throw new UserException(next.getMessage());
+				throw new CaveatException(next.getMessage());
 			}
 		} catch (Exception e) {
-			throw new UserException(e.getMessage());
+			throw new CaveatException(e.getMessage());
 		} finally {
 			try {
 				session.close();

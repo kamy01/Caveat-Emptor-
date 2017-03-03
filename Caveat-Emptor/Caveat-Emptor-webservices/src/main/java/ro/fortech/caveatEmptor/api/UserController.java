@@ -19,55 +19,55 @@ import ro.fortech.caveatEmptor.utils.ObjectUtils;
 @RequestMapping("/ws/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody ResponseDto<List<UserDto>> getAll() {
-	ResponseDto<List<UserDto>> response = new ResponseDto<>();
-	try {
-	    response.setData(userService.getAll());
-	    response.setSuccess(true);
-	} catch (Exception e) {
-	    response.setSuccess(false);
-	    response.setMessage(ObjectUtils.capitalizeFirstLetter(e.getMessage()));
+	@RequestMapping(method = RequestMethod.GET)
+	public @ResponseBody ResponseDto<List<UserDto>> getAll() {
+		ResponseDto<List<UserDto>> response = new ResponseDto<>();
+		try {
+			response.setData(userService.getAll());
+			response.setSuccess(true);
+		} catch (Exception e) {
+			response.setSuccess(false);
+			response.setMessage(ObjectUtils.capitalizeFirstLetter(e.getMessage()));
+		}
+		return response;
 	}
-	return response;
-    }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
-    public @ResponseBody ResponseDto<UserDto> getUserById(@PathVariable("userId") Long userId) {
-	ResponseDto<UserDto> response = new ResponseDto<>();
+	@RequestMapping(method = RequestMethod.GET, value = "/{userId}")
+	public @ResponseBody ResponseDto<UserDto> getUserById(@PathVariable("userId") Long userId) {
+		ResponseDto<UserDto> response = new ResponseDto<>();
 
-	return response;
+		return response;
 
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/enable")
-    public @ResponseBody ResponseDto<UserDto> updateUserById(@RequestBody UserDto userDto) {
-	ResponseDto<UserDto> response = new ResponseDto<>();
-
-	try {
-	    response.setData(userService.enableUser(userDto));
-	    response.setSuccess(true);
-	} catch (Exception e) {
-	    response.setSuccess(false);
-	    response.setMessage(ObjectUtils.capitalizeFirstLetter(e.getMessage()));
 	}
-	return response;
-    }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public @ResponseBody ResponseDto<Long> registerUser(@RequestBody UserDto userDto) {
-	ResponseDto<Long> response = new ResponseDto<>();
-	try {
-	    response.setData(userService.registerUser(userDto));
-	    response.setSuccess(true);
-	} catch (Exception e) {
-	    response.setSuccess(false);
-	    response.setMessage(ObjectUtils.capitalizeFirstLetter(e.getMessage()));
+	@RequestMapping(method = RequestMethod.POST, value = "/enable")
+	public @ResponseBody ResponseDto<UserDto> updateUserById(@RequestBody UserDto userDto) {
+		ResponseDto<UserDto> response = new ResponseDto<>();
+
+		try {
+			response.setData(userService.enableUser(userDto));
+			response.setSuccess(true);
+		} catch (Exception e) {
+			response.setSuccess(false);
+			response.setMessage(ObjectUtils.capitalizeFirstLetter(e.getMessage()));
+		}
+		return response;
 	}
-	return response;
-    }
+
+	@RequestMapping(method = RequestMethod.POST, value = "/register")
+	public @ResponseBody ResponseDto<Long> registerUser(@RequestBody UserDto userDto) {
+		ResponseDto<Long> response = new ResponseDto<>();
+		try {
+			response.setData(userService.registerUser(userDto));
+			response.setSuccess(true);
+		} catch (Exception e) {
+			response.setSuccess(false);
+			response.setMessage(ObjectUtils.capitalizeFirstLetter(e.getMessage()));
+		}
+		return response;
+	}
 
 }

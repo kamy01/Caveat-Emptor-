@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ro.fortech.caveatEmptor.business.transformers.ItemTransformer;
 import ro.fortech.caveatEmptor.dto.ItemCriteriaDto;
 import ro.fortech.caveatEmptor.dto.ItemDto;
+import ro.fortech.caveatEmptor.exceptions.CaveatException;
 import ro.fortech.caveatEmptor.integration.entities.Item;
 import ro.fortech.caveatEmptor.integration.repositories.items.ItemRepository;
 
@@ -25,15 +26,19 @@ public class ItemService {
 		case "sell":
 			itemCriteriaDto.setOption("sellers");
 			break;
-
 		default:
-			break;
+			throw new CaveatException("Illegal item criteria!");
 		}
 		List<Item> allItemsBought = itemRepository.getAllUserItems(itemCriteriaDto);
 
 		List<ItemDto> itemDtos = new ItemTransformer().entityToDtoList(allItemsBought, true, false);
 
 		return itemDtos;
+	}
+
+	public Long createItem(ItemDto itemDto) {
+		// itemRepository.saveItem(item)
+		return -1L;
 	}
 
 }

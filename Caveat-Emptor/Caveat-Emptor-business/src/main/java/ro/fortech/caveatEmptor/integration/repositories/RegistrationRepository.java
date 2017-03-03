@@ -6,15 +6,18 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ro.fortech.caveatEmptor.dto.RegistrationDto;
 import ro.fortech.caveatEmptor.integration.entities.Registration;
 
 @Repository
@@ -79,6 +82,27 @@ public class RegistrationRepository {
 		logger.info("<<<END>>> UserRepository.createUser");
 
 		return id;
+	}
+
+	public Registration enableRegistration(RegistrationDto registrationDto) {
+		logger.info("<<<START>>> RegistrationRepository.enableRegistration with params id: " + registrationDto.getId());
+
+		Registration registration = null;
+
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		registration = session.get(Registration.class, registrationDto.getId());
+
+		registration.setEnabled(registrationDto.isEnabled());
+		session.update(registration);
+
+		session.flush();
+		tx.commit();
+		session.close();
+
+		logger.info("<<<END>>> RegistrationRepository.enableRegistration");
+
+		return registration;
 	}
 
 }
