@@ -18,33 +18,52 @@ import ro.fortech.caveatEmptor.integration.entities.Category;
 @Repository
 public class CategoryRepository {
 
-    Logger logger = LoggerFactory.getLogger(CategoryRepository.class);
+	Logger logger = LoggerFactory.getLogger(CategoryRepository.class);
 
-    @Autowired
-    private SessionFactory sessionFactory;
+	@Autowired
+	private SessionFactory sessionFactory;
 
-    @SuppressWarnings("unchecked")
-    public List<Category> getAllCategories() {
-	logger.info("<<<START>>> CaterogyRepository.getAllCategories");
+	public Category getCategoryById(Long id) {
+		logger.info("<<<START>>> CaterogyRepository.getCategoryById with parameters: id = " + id);
 
-	List<Category> categories = null;
+		Category category = null;
 
-	Session session = sessionFactory.openSession();
-	Transaction tx = session.beginTransaction();
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 
-	categories = (List<Category>) session.createCriteria(Category.class).add(Restrictions.isNull("parent"))
-		.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+		category = session.get(Category.class, id);
 
-	session.flush();
-	tx.commit();
+		session.flush();
+		tx.commit();
+		session.close();
 
-	logger.info("<<<END>>> CaterogyRepository.getAllCategories");
-
-	if (categories == null) {
-	    categories = new ArrayList<>();
+		logger.info("<<<END>>> CaterogyRepository.getCategoryById");
+		return category;
 	}
 
-	return categories;
-    }
+	@SuppressWarnings("unchecked")
+	public List<Category> getAllCategories() {
+		logger.info("<<<START>>> CaterogyRepository.getAllCategories");
+
+		List<Category> categories = null;
+
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+
+		categories = (List<Category>) session.createCriteria(Category.class).add(Restrictions.isNull("parent"))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+
+		session.flush();
+		tx.commit();
+		session.close();
+
+		logger.info("<<<END>>> CaterogyRepository.getAllCategories");
+
+		if (categories == null) {
+			categories = new ArrayList<>();
+		}
+
+		return categories;
+	}
 
 }

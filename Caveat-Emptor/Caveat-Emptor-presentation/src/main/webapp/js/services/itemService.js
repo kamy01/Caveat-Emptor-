@@ -17,7 +17,7 @@ function ItemService($http){
     }
 
     function GetAllWithCriteria(criteria) {
-    	return $http.post(COMPLETE_ITEMS_WS_URL, criteria).then(handleSuccess, handleError('Error getting all items'))
+    	return $http.get(COMPLETE_ITEMS_WS_URL + '/' + criteria.option + '/' + criteria.id).then(handleSuccess, handleError('Error getting all items'))
     }
     
     function GetById(id) {

@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -66,10 +67,10 @@ public class User {
 	@JoinColumn(name = SHIPPING_ADDRESS_ID)
 	private Address shippingAddress;
 
-	@ManyToMany(mappedBy = "sellers", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "seller", fetch = FetchType.LAZY)
 	private List<Item> itemsSold;
 
-	@ManyToMany(mappedBy = "buyers", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY)
 	private List<Item> itemsBought;
 
 	public User() {

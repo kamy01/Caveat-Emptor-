@@ -2,10 +2,10 @@
  <label for="itemsSelect"> Items to: </label>
  <select name="itemsSelect" ng-model="ctrl.itemOption" ng-change="ctrl.updateItems()">
    <option value="">---Please select---</option>
-   <option value="sell">Sell</option>
-   <option value="buy">Buy</option>
+   <option value="sold">Sell</option>
+   <option value="bought">Buy</option>
  </select>
- <input type="button" value="Define new item" ng-if="ctrl.itemOption == 'sell'"></input>
+ <input type="button" value="Define new item" ng-if="ctrl.itemOption == 'sold'"></input>
     
 </div>
 
@@ -45,7 +45,7 @@
 						<span ng-if="ctrl.getSortType() == 'bestBid' && ctrl.isReverse()" class="glyphicon glyphicon glyphicon-sort-by-alphabet-alt"></span>
 					</span>
 				</th>
-				<th ng-if="ctrl.itemOption == 'buy'" ng-click="ctrl.setSortType('yourBid', $event)" class="colMaxWidth" >
+				<th ng-if="ctrl.itemOption == 'bought'" ng-click="ctrl.setSortType('yourBid', $event)" class="colMaxWidth" >
 					<input type="text" placeholder="Your Bid" ng-model="searchFilter.yourBid"></input>
 					<span>
 						<span ng-if="ctrl.getSortType() == 'yourBid' && !ctrl.isReverse()" class="glyphicon glyphicon-sort-by-alphabet"></span>
@@ -96,17 +96,17 @@
 				<td>{{item.categories}}</td>
 				<td>{{item.initialPrice | currency}}</td>
 				<td>{{item.bestBid}}</td>
-				<td ng-if="ctrl.itemOption == 'buy'">Your Bid</td>
+				<td ng-if="ctrl.itemOption == 'bought'">Your Bid</td>
 				<td>{{item.bids == null ? 0 : item.bids.length}}</td>
 				<td>{{item.startDate}}</span></td>
 				<td>{{item.endDate}}</td>
 				<td>{{item.state}}</td>
 				<td>Winner</td>
 				<td>
-					<div ng-if="ctrl.itemOption == 'buy'">
+					<div ng-if="ctrl.itemOption == 'bought'">
 						<input type="button" value="Edit"></input>
 					</div>
-					<div ng-if="ctrl.itemOption == 'sell'">
+					<div ng-if="ctrl.itemOption == 'sold'">
 						<input type="button" value="Close"></input>
 						<input type="button" value="Abandon"></input>
 						<input type="button" value="Change"></input>

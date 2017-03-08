@@ -1,4 +1,4 @@
-package ro.fortech.caveatEmptor.integration.repositories;
+package ro.fortech.caveatEmptor.integration.repositories.registrations;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -6,12 +6,10 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

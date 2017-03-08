@@ -14,7 +14,7 @@ import ro.fortech.caveatEmptor.dto.RegistrationDto;
 import ro.fortech.caveatEmptor.dto.UserDto;
 import ro.fortech.caveatEmptor.exceptions.CaveatException;
 import ro.fortech.caveatEmptor.integration.entities.Registration;
-import ro.fortech.caveatEmptor.integration.repositories.RegistrationRepository;
+import ro.fortech.caveatEmptor.integration.repositories.registrations.RegistrationRepository;
 import ro.fortech.caveatEmptor.integration.repositories.users.UserRepository;
 import ro.fortech.caveatEmptor.utils.ObjectUtils;
 

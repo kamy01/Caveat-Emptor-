@@ -4,25 +4,25 @@ import java.io.Serializable;
 
 public class ItemCriteriaDto implements Serializable {
 
-    private static final long serialVersionUID = 3451450733420250814L;
+	private static final long serialVersionUID = 3451450733420250814L;
 
-    private Long id;
-    private String option;
+	private Long id;
+	private boolean sold;
 
-    public Long getId() {
-	return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long userId) {
-	this.id = userId;
-    }
+	public void setId(Long userId) {
+		this.id = userId;
+	}
 
-    public String getOption() {
-	return option;
-    }
+	public boolean isSold() {
+		return sold;
+	}
 
-    public void setOption(String option) {
-	this.option = option;
-    }
+	public void setSold(boolean option) {
+		this.sold = option;
+	}
 
 }

@@ -20,21 +20,18 @@ public class ItemDto implements Serializable {
 	private Date endDate;
 	private String state;
 	private Timestamp approvalDateTime;
-	private List<CategoryDto> categories;
+	private CategoryDto category;
 	private BidDto successfullBid;
 	private List<BidDto> bids;
-	private List<UserDto> sellers;
-	private List<UserDto> buyers;
+	private UserDto seller;
+	private UserDto buyer;
 
 	public ItemDto() {
 		initMembers();
 	}
 
 	private void initMembers() {
-		categories = new ArrayList<>();
 		bids = new ArrayList<>();
-		sellers = new ArrayList<>();
-		buyers = new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -109,12 +106,12 @@ public class ItemDto implements Serializable {
 		this.approvalDateTime = approvalDateTime;
 	}
 
-	public List<CategoryDto> getCategories() {
-		return categories;
+	public CategoryDto getCategory() {
+		return category;
 	}
 
-	public void setCategories(List<CategoryDto> categories) {
-		this.categories = categories;
+	public void setCategory(CategoryDto category) {
+		this.category = category;
 	}
 
 	public BidDto getSuccessfullBid() {
@@ -133,20 +130,20 @@ public class ItemDto implements Serializable {
 		this.bids = bids;
 	}
 
-	public List<UserDto> getSellers() {
-		return sellers;
+	public UserDto getSeller() {
+		return seller;
 	}
 
-	public void setSellers(List<UserDto> sellers) {
-		this.sellers = sellers;
+	public void setSeller(UserDto seller) {
+		this.seller = seller;
 	}
 
-	public List<UserDto> getBuyers() {
-		return buyers;
+	public UserDto getBuyer() {
+		return buyer;
 	}
 
-	public void setBuyers(List<UserDto> buyers) {
-		this.buyers = buyers;
+	public void setBuyer(UserDto buyer) {
+		this.buyer = buyer;
 	}
 
 }

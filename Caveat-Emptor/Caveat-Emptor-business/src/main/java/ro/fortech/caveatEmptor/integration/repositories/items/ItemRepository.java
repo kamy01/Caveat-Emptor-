@@ -14,7 +14,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,25 +31,30 @@ public class ItemRepository {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@SuppressWarnings("unchecked")
 	public List<Item> getAllUserItems(ItemCriteriaDto itemCriteriaDto) throws Exception {
 		List<Item> items = null;
 
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		try {
-			Criteria citeria = session.createCriteria(Item.class, "item")
-					.createAlias("item." + itemCriteriaDto.getOption(), "itemCriteriaOption", JoinType.LEFT_OUTER_JOIN)
-					.add(Restrictions.eq("itemCriteriaOption.id", itemCriteriaDto.getId()))
-					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			Criteria criteria = session.createCriteria(Item.class, "item");
+			if (itemCriteriaDto.isSold()) {
+				criteria.add(Restrictions.eq("seller.id", itemCriteriaDto.getId()));
+			} else {
+				criteria.add(Restrictions.eq("buyer.id", itemCriteriaDto.getId()));
+			}
 
-			items = citeria.list();
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+			items = criteria.list();
 
 			for (Item item : items) {
-				Hibernate.initialize(item.getCategories());
+				Hibernate.initialize(item.getCategory());
 				Hibernate.initialize(item.getBids());
 				Hibernate.initialize(item.getSuccessfullBid());
-				Hibernate.initialize(item.getBuyers());
-				Hibernate.initialize(item.getSellers());
+				Hibernate.initialize(item.getBuyer());
+				Hibernate.initialize(item.getSeller());
 			}
 
 			session.flush();
@@ -73,6 +77,36 @@ public class ItemRepository {
 				e.printStackTrace();
 			}
 		}
+
+		if (items == null) {
+			items = new ArrayList<>();
+		}
+
+		return items;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Item> getItemsByCategoryId(List<Long> categoryIds) {
+
+		List<Item> items = null;
+
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+
+		Criteria criteria = session.createCriteria(Item.class, "item").add(Restrictions.in("category.id", categoryIds))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+		items = criteria.list();
+
+		if (items != null && !items.isEmpty()) {
+			items.stream().forEach(item -> {
+				Hibernate.initialize(item.getBids());
+			});
+		}
+
+		session.flush();
+		tx.commit();
+		session.close();
 
 		if (items == null) {
 			items = new ArrayList<>();
