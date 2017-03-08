@@ -1,5 +1,19 @@
 package ro.fortech.caveatEmptor.integration.entities;
 
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.BILLING_ADDRESS_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.EMAIL;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.FIRST_NAME;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.HOME_ADDRESS_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.IS_ADMIN;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.IS_ENABLED;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.LAST_NAME;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.PASSWORD;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.RANKING;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.SHIPPING_ADDRESS_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.USERS;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.USER_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.USER_NAME;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,15 +23,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
-
-import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.*;
 
 @Entity
 @Table(name = USERS)
