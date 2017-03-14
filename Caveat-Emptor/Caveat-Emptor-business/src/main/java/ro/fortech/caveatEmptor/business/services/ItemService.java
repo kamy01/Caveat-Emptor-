@@ -17,6 +17,7 @@ import ro.fortech.caveatEmptor.integration.entities.User;
 import ro.fortech.caveatEmptor.integration.repositories.categories.CategoryRepository;
 import ro.fortech.caveatEmptor.integration.repositories.items.ItemRepository;
 import ro.fortech.caveatEmptor.integration.repositories.users.UserRepository;
+import ro.fortech.caveatEmptor.states.ObjectStates;
 
 @Service
 public class ItemService {
@@ -73,6 +74,8 @@ public class ItemService {
 
     public Long createItem(ItemDto itemDto) throws Exception {
 	validateItem(itemDto, "create");
+
+	itemDto.setState(ObjectStates.ITEM_STATE_OPEN);
 
 	User owner = userRepository.getUserById(itemDto.getSeller().getId());
 	Category category = categoryRepository.getCategoryById(itemDto.getCategory().getId());
