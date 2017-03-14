@@ -21,84 +21,120 @@ import ro.fortech.caveatEmptor.integration.repositories.users.UserRepository;
 @Service
 public class ItemService {
 
-	@Autowired
-	private ItemRepository itemRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Autowired
-	private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
-	public List<ItemDto> getAllItemsWithCriteria(ItemCriteriaDto itemCriteriaDto) throws Exception {
-		List<Item> allItemsBought = itemRepository.getAllUserItems(itemCriteriaDto);
+    public ItemDto getItemById(Long itemId) {
+	Item item = itemRepository.getItemById(itemId);
 
-		if (!itemCriteriaDto.isSold()) {
-			// TODO add items for which the current user has a bid
-		}
+	ItemDto itemDto = new ItemTransformer().entityToDto(item, true, false);
 
-		List<ItemDto> itemDtos = new ItemTransformer().entityToDtoList(allItemsBought, true, false);
+	return itemDto;
+    }
 
-		return itemDtos;
+    public List<ItemDto> getAllItemsWithCriteria(ItemCriteriaDto itemCriteriaDto) throws Exception {
+	List<Item> allItemsBought = itemRepository.getAllUserItems(itemCriteriaDto);
+
+	if (!itemCriteriaDto.isSold()) {
+	    // TODO add items for which the current user has a bid
 	}
 
-	public Long createItem(ItemDto itemDto) throws Exception {
-		validateItem(itemDto, "create");
+	List<ItemDto> itemDtos = new ItemTransformer().entityToDtoList(allItemsBought, true, false);
 
-		User owner = userRepository.getUserById(itemDto.getSeller().getId());
-		Category category = categoryRepository.getCategoryById(itemDto.getCategory().getId());
+	return itemDtos;
+    }
 
-		Item item = new ItemTransformer().dtoToEntity(itemDto, false, false);
-		item.setSeller(owner);
-		item.setCategory(category);
-
-		return itemRepository.saveItem(item);
+    public List<ItemDto> getAllItemsByCategoryId(Long categoryId) throws Exception {
+	if (categoryId == null) {
+	    throw new CaveatException("Could not retrieve items. Category not found!");
 	}
 
-	private void validateItem(ItemDto itemDto, String option) throws CaveatException {
-		if (itemDto.getSeller() == null || itemDto.getSeller().getId() == null) {
-			throw new CaveatException("Item cannot be created! Seller not found!");
-		}
+	List<ItemDto> response = null;
 
-		if (itemDto.getCategory() == null || itemDto.getCategory().getId() == null) {
-			throw new CaveatException("Item cannot be created! Category not found!");
-		}
+	Category category = categoryRepository.getCategoryById(categoryId);
+
+	List<Long> categoryIds = addChildrenIds(category);
+	categoryIds.sort(Comparator.naturalOrder());
+
+	response = new ItemTransformer().entityToDtoList(itemRepository.getItemsByCategoryId(categoryIds), true, false);
+
+	if (response == null) {
+	    response = new ArrayList<>();
 	}
 
-	public List<ItemDto> getAllItemsWithCategory(Long categoryId) throws Exception {
+	return response;
+    }
 
-		if (categoryId == null) {
-			throw new CaveatException("Could not retrieve items. Category not found!");
-		}
+    public Long createItem(ItemDto itemDto) throws Exception {
+	validateItem(itemDto, "create");
 
-		List<ItemDto> response = null;
+	User owner = userRepository.getUserById(itemDto.getSeller().getId());
+	Category category = categoryRepository.getCategoryById(itemDto.getCategory().getId());
 
-		Category category = categoryRepository.getCategoryById(categoryId);
+	Item item = new ItemTransformer().dtoToEntity(itemDto, false, false);
+	item.setSeller(owner);
+	item.setCategory(category);
 
-		List<Long> categoryIds = addChildrenIds(category);
-		categoryIds.sort(Comparator.naturalOrder());
+	return itemRepository.saveItem(item);
+    }
 
-		response = new ItemTransformer().entityToDtoList(itemRepository.getItemsByCategoryId(categoryIds), true, false);
+    public boolean changeItem(ItemDto itemDto, boolean changeStateOnly) throws Exception {
+	this.validateItem(itemDto, "change");
 
-		if (response == null) {
-			response = new ArrayList<>();
-		}
+	boolean response = false;
 
-		return response;
+	Item item = new ItemTransformer().dtoToEntity(itemDto, false, false);
+
+	if (changeStateOnly) {
+	    response = itemRepository.changeItemState(item);
+	} else {
+	    response = itemRepository.changeItem(item);
 	}
 
-	private List<Long> addChildrenIds(Category category) {
-		List<Long> childrenIds = new ArrayList<>();
+	return response;
+    }
 
-		if (category != null && category.getId() != null) {
-			childrenIds.add(category.getId());
-			if (category.getChildren() != null && !category.getChildren().isEmpty()) {
-				category.getChildren().stream().forEach(child -> childrenIds.addAll(addChildrenIds(child)));
-			}
-		}
+    private void validateItem(ItemDto itemDto, String option) throws CaveatException {
+	switch (option) {
+	case "create":
+	    if (itemDto.getSeller() == null || itemDto.getSeller().getId() == null) {
+		throw new CaveatException("Item cannot be created! Seller not found!");
+	    }
 
-		return childrenIds;
+	    if (itemDto.getCategory() == null || itemDto.getCategory().getId() == null) {
+		throw new CaveatException("Item cannot be created! Category not found!");
+	    }
 
+	    break;
+	case "change":
+	    if (itemDto == null || itemDto.getId() == null) {
+		throw new CaveatException("Item cannot be changed! Id not found");
+	    }
+	    break;
+	default:
+	    break;
 	}
+
+    }
+
+    private List<Long> addChildrenIds(Category category) {
+	List<Long> childrenIds = new ArrayList<>();
+
+	if (category != null && category.getId() != null) {
+	    childrenIds.add(category.getId());
+	    if (category.getChildren() != null && !category.getChildren().isEmpty()) {
+		category.getChildren().stream().forEach(child -> childrenIds.addAll(addChildrenIds(child)));
+	    }
+	}
+
+	return childrenIds;
+
+    }
 
 }

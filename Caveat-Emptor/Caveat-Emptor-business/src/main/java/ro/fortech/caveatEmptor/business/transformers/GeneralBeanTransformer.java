@@ -30,6 +30,6 @@ public abstract class GeneralBeanTransformer<D, E> {
 
     public abstract D entityToDto(E origin, boolean deepClone, boolean secondLevelClone);
 
-	public abstract E dtoToEntity(D origin, boolean deepClone, boolean secondLevelClone);
+    public abstract E dtoToEntity(D origin, boolean deepClone, boolean secondLevelClone);
 
 }

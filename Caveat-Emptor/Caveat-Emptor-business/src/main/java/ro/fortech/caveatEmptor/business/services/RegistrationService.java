@@ -21,50 +21,50 @@ import ro.fortech.caveatEmptor.utils.ObjectUtils;
 @Service
 public class RegistrationService {
 
-	@Autowired
-	private RegistrationRepository registrationRepository;
+    @Autowired
+    private RegistrationRepository registrationRepository;
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	public RegistrationDto createRegistration(UserDto userDto) throws Exception {
+    public RegistrationDto createRegistration(UserDto userDto) throws Exception {
 
-		Registration registration = new Registration();
-		registration.setId(UUID.randomUUID().toString());
+	Registration registration = new Registration();
+	registration.setId(UUID.randomUUID().toString());
 
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
+	Calendar cal = Calendar.getInstance();
+	cal.setTime(new Date());
 
-		registration.setCreationDate(new Timestamp(cal.getTimeInMillis()));
+	registration.setCreationDate(new Timestamp(cal.getTimeInMillis()));
 
-		cal.add(Calendar.DAY_OF_YEAR, 1);
-		registration.setExpiryDate(new Timestamp(cal.getTimeInMillis()));
+	cal.add(Calendar.DAY_OF_YEAR, 1);
+	registration.setExpiryDate(new Timestamp(cal.getTimeInMillis()));
 
-		registration.setEnabled(true);
-		registration.setUser(new UserTransformer().dtoToEntity(userDto, false, false));
+	registration.setEnabled(true);
+	registration.setUser(new UserTransformer().dtoToEntity(userDto, false, false));
 
-		registrationRepository.saveRegistration(registration);
+	registrationRepository.saveRegistration(registration);
 
-		return new RegistrationTransformer().entityToDto(registration, true, false);
+	return new RegistrationTransformer().entityToDto(registration, true, false);
+    }
+
+    public boolean activateRegistration(String registrationId) throws Exception {
+
+	Registration registration = registrationRepository.getRegistrationById(registrationId);
+
+	if (registration == null || ObjectUtils.isNullOrEmpty(registration.getId())) {
+	    throw new CaveatException("Registration not found!!");
 	}
 
-	public boolean activateRegistration(String registrationId) throws Exception {
+	RegistrationDto registrationDto = new RegistrationTransformer().entityToDto(registration, false, false);
+	registrationDto.setEnabled(false);
+	registrationRepository.enableRegistration(registrationDto);
 
-		Registration registration = registrationRepository.getRegistrationById(registrationId);
+	UserDto userDto = new UserTransformer().entityToDto(registration.getUser(), false, false);
+	userDto.setEnabled(true);
+	userRepository.enableUser(userDto);
 
-		if (registration == null || ObjectUtils.isNullOrEmpty(registration.getId())) {
-			throw new CaveatException("Registration not found!!");
-		}
-
-		RegistrationDto registrationDto = new RegistrationTransformer().entityToDto(registration, false, false);
-		registrationDto.setEnabled(false);
-		registrationRepository.enableRegistration(registrationDto);
-
-		UserDto userDto = new UserTransformer().entityToDto(registration.getUser(), false, false);
-		userDto.setEnabled(true);
-		userRepository.enableUser(userDto);
-
-		return true;
-	}
+	return true;
+    }
 
 }

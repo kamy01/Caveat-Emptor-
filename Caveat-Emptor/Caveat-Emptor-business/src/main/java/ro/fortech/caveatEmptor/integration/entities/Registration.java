@@ -20,60 +20,60 @@ import javax.persistence.Table;
 @Table(name = REGISTRATIONS)
 public class Registration {
 
-	@Id
-	@Column(name = REGISTRATION_ID)
-	private String id;
+    @Id
+    @Column(name = REGISTRATION_ID)
+    private String id;
 
-	@Column(name = CREATION_DATE)
-	private Timestamp creationDate;
+    @Column(name = CREATION_DATE)
+    private Timestamp creationDate;
 
-	@Column(name = EXPIRY_DATE)
-	private Timestamp expiryDate;
+    @Column(name = EXPIRY_DATE)
+    private Timestamp expiryDate;
 
-	@Column(name = ENABLED)
-	private boolean enabled;
+    @Column(name = ENABLED)
+    private boolean enabled;
 
-	@OneToOne
-	@JoinColumn(name = USER_ID)
-	private User user;
+    @OneToOne
+    @JoinColumn(name = USER_ID)
+    private User user;
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+	return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+	this.id = id;
+    }
 
-	public Timestamp getCreationDate() {
-		return creationDate;
-	}
+    public Timestamp getCreationDate() {
+	return creationDate;
+    }
 
-	public void setCreationDate(Timestamp creationDate) {
-		this.creationDate = creationDate;
-	}
+    public void setCreationDate(Timestamp creationDate) {
+	this.creationDate = creationDate;
+    }
 
-	public Timestamp getExpiryDate() {
-		return expiryDate;
-	}
+    public Timestamp getExpiryDate() {
+	return expiryDate;
+    }
 
-	public void setExpiryDate(Timestamp expiryDate) {
-		this.expiryDate = expiryDate;
-	}
+    public void setExpiryDate(Timestamp expiryDate) {
+	this.expiryDate = expiryDate;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public boolean isEnabled() {
+	return enabled;
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public void setEnabled(boolean enabled) {
+	this.enabled = enabled;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public User getUser() {
+	return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+	this.user = user;
+    }
 }

@@ -5,41 +5,41 @@ import ro.fortech.caveatEmptor.integration.entities.Registration;
 
 public class RegistrationTransformer extends GeneralBeanTransformer<RegistrationDto, Registration> {
 
-	@Override
-	public RegistrationDto entityToDto(Registration origin, boolean deepClone, boolean secondLevelClone) {
-		RegistrationDto destination = new RegistrationDto();
+    @Override
+    public RegistrationDto entityToDto(Registration origin, boolean deepClone, boolean secondLevelClone) {
+	RegistrationDto destination = new RegistrationDto();
 
-		if (origin != null && origin.getId() != null) {
-			destination.setId(origin.getId());
-			destination.setCreationDate(origin.getCreationDate());
-			destination.setExpiryDate(origin.getExpiryDate());
-			destination.setEnabled(origin.isEnabled());
+	if (origin != null && origin.getId() != null) {
+	    destination.setId(origin.getId());
+	    destination.setCreationDate(origin.getCreationDate());
+	    destination.setExpiryDate(origin.getExpiryDate());
+	    destination.setEnabled(origin.isEnabled());
 
-			if (deepClone) {
-				destination.setUser(new UserTransformer().entityToDto(origin.getUser(), secondLevelClone, false));
-			}
-		}
-
-		return destination;
+	    if (deepClone) {
+		destination.setUser(new UserTransformer().entityToDto(origin.getUser(), secondLevelClone, false));
+	    }
 	}
 
-	@Override
-	public Registration dtoToEntity(RegistrationDto origin, boolean deepClone, boolean secondLevelClone) {
-		Registration destination = new Registration();
+	return destination;
+    }
 
-		if (origin != null && origin.getId() != null) {
-			destination.setId(origin.getId());
-			destination.setCreationDate(origin.getCreationDate());
-			destination.setExpiryDate(origin.getExpiryDate());
-			destination.setEnabled(origin.isEnabled());
+    @Override
+    public Registration dtoToEntity(RegistrationDto origin, boolean deepClone, boolean secondLevelClone) {
+	Registration destination = new Registration();
 
-			if (deepClone) {
-				destination.setUser(new UserTransformer().dtoToEntity(origin.getUser(), secondLevelClone, false));
-			}
+	if (origin != null && origin.getId() != null) {
+	    destination.setId(origin.getId());
+	    destination.setCreationDate(origin.getCreationDate());
+	    destination.setExpiryDate(origin.getExpiryDate());
+	    destination.setEnabled(origin.isEnabled());
 
-		}
+	    if (deepClone) {
+		destination.setUser(new UserTransformer().dtoToEntity(origin.getUser(), secondLevelClone, false));
+	    }
 
-		return destination;
 	}
+
+	return destination;
+    }
 
 }

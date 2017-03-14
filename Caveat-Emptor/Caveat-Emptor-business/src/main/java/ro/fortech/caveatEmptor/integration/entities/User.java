@@ -34,175 +34,175 @@ import org.hibernate.validator.constraints.Email;
 @Table(name = USERS)
 public class User {
 
-	@Id
-	@GeneratedValue
-	@Column(name = USER_ID, unique = true, nullable = false, updatable = false)
-	private Long id;
+    @Id
+    @GeneratedValue
+    @Column(name = USER_ID, unique = true, nullable = false, updatable = false)
+    private Long id;
 
-	@Column(name = FIRST_NAME, nullable = false)
-	private String firstName;
+    @Column(name = FIRST_NAME, nullable = false)
+    private String firstName;
 
-	@Column(name = LAST_NAME, nullable = false)
-	private String lastName;
+    @Column(name = LAST_NAME, nullable = false)
+    private String lastName;
 
-	@Size(min = 3, message = "Username must be at least 3 character!")
-	@Column(name = USER_NAME, unique = true, nullable = false, updatable = false)
-	private String username;
+    @Size(min = 3, message = "Username must be at least 3 character!")
+    @Column(name = USER_NAME, unique = true, nullable = false, updatable = false)
+    private String username;
 
-	@Size(min = 5, message = "Password must be at least 3 character!")
-	@Column(name = PASSWORD, nullable = false)
-	private String password;
+    @Size(min = 5, message = "Password must be at least 3 character!")
+    @Column(name = PASSWORD, nullable = false)
+    private String password;
 
-	@Email
-	@Column(name = EMAIL, unique = true, nullable = false)
-	private String email;
+    @Email
+    @Column(name = EMAIL, unique = true, nullable = false)
+    private String email;
 
-	@Column(name = RANKING)
-	private Long ranking;
+    @Column(name = RANKING)
+    private Long ranking;
 
-	@Column(name = IS_ADMIN)
-	private boolean isAdmin;
+    @Column(name = IS_ADMIN)
+    private boolean isAdmin;
 
-	@Column(name = IS_ENABLED)
-	private boolean enabled;
+    @Column(name = IS_ENABLED)
+    private boolean enabled;
 
-	@OneToOne
-	@JoinColumn(name = HOME_ADDRESS_ID)
-	private Address homeAddress;
+    @OneToOne
+    @JoinColumn(name = HOME_ADDRESS_ID)
+    private Address homeAddress;
 
-	@OneToOne
-	@JoinColumn(name = BILLING_ADDRESS_ID)
-	private Address billingAddress;
+    @OneToOne
+    @JoinColumn(name = BILLING_ADDRESS_ID)
+    private Address billingAddress;
 
-	@OneToOne
-	@JoinColumn(name = SHIPPING_ADDRESS_ID)
-	private Address shippingAddress;
+    @OneToOne
+    @JoinColumn(name = SHIPPING_ADDRESS_ID)
+    private Address shippingAddress;
 
-	@OneToMany(mappedBy = "seller", fetch = FetchType.LAZY)
-	private List<Item> itemsSold;
+    @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY)
+    private List<Item> itemsSold;
 
-	@OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY)
-	private List<Item> itemsBought;
+    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY)
+    private List<Item> itemsBought;
 
-	public User() {
-		initMembers();
-	}
+    public User() {
+	initMembers();
+    }
 
-	private void initMembers() {
-		itemsSold = new ArrayList<>();
-		itemsBought = new ArrayList<>();
-	}
+    private void initMembers() {
+	itemsSold = new ArrayList<>();
+	itemsBought = new ArrayList<>();
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getFirstName() {
+	return firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setFirstName(String firstName) {
+	this.firstName = firstName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+	return lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setLastName(String lastName) {
+	this.lastName = lastName;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getUsername() {
+	return username;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUsername(String username) {
+	this.username = username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+	return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+	this.password = password;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
-	public Long getRanking() {
-		return ranking;
-	}
+    public Long getRanking() {
+	return ranking;
+    }
 
-	public void setRanking(Long ranking) {
-		this.ranking = ranking;
-	}
+    public void setRanking(Long ranking) {
+	this.ranking = ranking;
+    }
 
-	public boolean isAdmin() {
-		return isAdmin;
-	}
+    public boolean isAdmin() {
+	return isAdmin;
+    }
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
+    public void setAdmin(boolean isAdmin) {
+	this.isAdmin = isAdmin;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public boolean isEnabled() {
+	return enabled;
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public void setEnabled(boolean enabled) {
+	this.enabled = enabled;
+    }
 
-	public Address getHomeAddress() {
-		return homeAddress;
-	}
+    public Address getHomeAddress() {
+	return homeAddress;
+    }
 
-	public void setHomeAddress(Address homeAddress) {
-		this.homeAddress = homeAddress;
-	}
+    public void setHomeAddress(Address homeAddress) {
+	this.homeAddress = homeAddress;
+    }
 
-	public Address getBillingAddress() {
-		return billingAddress;
-	}
+    public Address getBillingAddress() {
+	return billingAddress;
+    }
 
-	public void setBillingAddress(Address billingAddress) {
-		this.billingAddress = billingAddress;
-	}
+    public void setBillingAddress(Address billingAddress) {
+	this.billingAddress = billingAddress;
+    }
 
-	public Address getShippingAddress() {
-		return shippingAddress;
-	}
+    public Address getShippingAddress() {
+	return shippingAddress;
+    }
 
-	public void setShippingAddress(Address shippingAddress) {
-		this.shippingAddress = shippingAddress;
-	}
+    public void setShippingAddress(Address shippingAddress) {
+	this.shippingAddress = shippingAddress;
+    }
 
-	public List<Item> getItemsSold() {
-		return itemsSold;
-	}
+    public List<Item> getItemsSold() {
+	return itemsSold;
+    }
 
-	public void setItemsSold(List<Item> itemsSold) {
-		this.itemsSold = itemsSold;
-	}
+    public void setItemsSold(List<Item> itemsSold) {
+	this.itemsSold = itemsSold;
+    }
 
-	public List<Item> getItemsBought() {
-		return itemsBought;
-	}
+    public List<Item> getItemsBought() {
+	return itemsBought;
+    }
 
-	public void setItemsBought(List<Item> itemsBought) {
-		this.itemsBought = itemsBought;
-	}
+    public void setItemsBought(List<Item> itemsBought) {
+	this.itemsBought = itemsBought;
+    }
 
 }
