@@ -26,7 +26,7 @@ function NavigationController($scope, $rootScope) {
 		url : "#/account"
 	} ];
 
-	ctrl.managementLinks = [ '#/users' ];
+	ctrl.managementLinks = [ '#/users', '#/categories' ];
 
 	function DisplayLink(link) {
 		if (ctrl.managementLinks.includes(link.url))

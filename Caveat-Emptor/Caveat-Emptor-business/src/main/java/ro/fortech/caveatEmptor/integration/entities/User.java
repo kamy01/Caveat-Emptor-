@@ -1,21 +1,34 @@
 package ro.fortech.caveatEmptor.integration.entities;
 
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.BILLING_ADDRESS_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.EMAIL;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.FIRST_NAME;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.HOME_ADDRESS_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.IS_ADMIN;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.IS_ENABLED;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.LAST_NAME;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.PASSWORD;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.RANKING;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.SHIPPING_ADDRESS_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.USERS;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.USER_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.USER_NAME;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
-
-import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.*;
 
 @Entity
 @Table(name = USERS)
@@ -50,6 +63,9 @@ public class User {
     @Column(name = IS_ADMIN)
     private boolean isAdmin;
 
+    @Column(name = IS_ENABLED)
+    private boolean enabled;
+
     @OneToOne
     @JoinColumn(name = HOME_ADDRESS_ID)
     private Address homeAddress;
@@ -62,10 +78,10 @@ public class User {
     @JoinColumn(name = SHIPPING_ADDRESS_ID)
     private Address shippingAddress;
 
-    @ManyToMany(mappedBy = "sellers")
+    @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY)
     private List<Item> itemsSold;
 
-    @ManyToMany(mappedBy = "buyers")
+    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY)
     private List<Item> itemsBought;
 
     public User() {
@@ -105,8 +121,8 @@ public class User {
 	return username;
     }
 
-    public void setUsername(String userName) {
-	this.username = userName;
+    public void setUsername(String username) {
+	this.username = username;
     }
 
     public String getPassword() {
@@ -139,6 +155,14 @@ public class User {
 
     public void setAdmin(boolean isAdmin) {
 	this.isAdmin = isAdmin;
+    }
+
+    public boolean isEnabled() {
+	return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+	this.enabled = enabled;
     }
 
     public Address getHomeAddress() {

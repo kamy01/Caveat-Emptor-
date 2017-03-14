@@ -1,5 +1,20 @@
 package ro.fortech.caveatEmptor.integration.entities;
 
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.APPROVAL_DATE_TIME;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.DESCRIPTION;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.END_DATE;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.INITIAL_PRICE;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.ITEMS;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.ITEM_BUYER_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.ITEM_CATEGORY_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.ITEM_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.ITEM_NAME;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.ITEM_SELLER_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.RESERVE_PRICE;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.START_DATE;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.STATE;
+import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.SUCCESSFUL_BID_ID;
+
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -12,15 +27,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import static ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields.*;
-import static ro.fortech.caveatEmptor.integration.entities.fields.ItemFields.*;
-import static ro.fortech.caveatEmptor.integration.entities.fields.UserFields.*;
 
 @Entity
 @Table(name = ITEMS)
@@ -55,11 +65,9 @@ public class Item {
     @Column(name = APPROVAL_DATE_TIME)
     private Timestamp approvalDateTime;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = ITEM_CATEGORY, joinColumns = {
-	    @JoinColumn(name = ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
-		    @JoinColumn(name = CATEGORY_ID, nullable = false, updatable = false) })
-    private List<Category> categories;
+    @ManyToOne
+    @JoinColumn(name = ITEM_CATEGORY_ID)
+    private Category category;
 
     @OneToOne
     @JoinColumn(name = SUCCESSFUL_BID_ID)
@@ -68,27 +76,20 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Bid> bids;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = ITEM_SELLER, joinColumns = {
-	    @JoinColumn(name = ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
-		    @JoinColumn(name = USER_ID, nullable = false, updatable = false) })
-    private List<User> sellers;
+    @ManyToOne
+    @JoinColumn(name = ITEM_SELLER_ID)
+    private User seller;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = ITEM_BUYER, joinColumns = {
-	    @JoinColumn(name = ITEM_ID, nullable = false, updatable = false) }, inverseJoinColumns = {
-		    @JoinColumn(name = USER_ID, nullable = false, updatable = false) })
-    private List<User> buyers;
+    @ManyToOne
+    @JoinColumn(name = ITEM_BUYER_ID)
+    private User buyer;
 
     public Item() {
 	initMembers();
     }
 
     private void initMembers() {
-	categories = new ArrayList<>();
 	bids = new ArrayList<>();
-	sellers = new ArrayList<>();
-	buyers = new ArrayList<>();
     }
 
     public Long getId() {
@@ -163,12 +164,12 @@ public class Item {
 	this.approvalDateTime = approvalDateTime;
     }
 
-    public List<Category> getCategories() {
-	return categories;
+    public Category getCategory() {
+	return category;
     }
 
-    public void setCategories(List<Category> categories) {
-	this.categories = categories;
+    public void setCategory(Category category) {
+	this.category = category;
     }
 
     public Bid getSuccessfullBid() {
@@ -187,20 +188,20 @@ public class Item {
 	this.bids = bids;
     }
 
-    public List<User> getSellers() {
-	return sellers;
+    public User getSeller() {
+	return seller;
     }
 
-    public void setSellers(List<User> sellers) {
-	this.sellers = sellers;
+    public void setSeller(User seller) {
+	this.seller = seller;
     }
 
-    public List<User> getBuyers() {
-	return buyers;
+    public User getBuyer() {
+	return buyer;
     }
 
-    public void setBuyers(List<User> buyers) {
-	this.buyers = buyers;
+    public void setBuyer(User buyer) {
+	this.buyer = buyer;
     }
 
 }

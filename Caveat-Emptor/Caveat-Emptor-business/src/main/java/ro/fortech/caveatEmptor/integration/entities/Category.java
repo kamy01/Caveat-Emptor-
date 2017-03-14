@@ -1,5 +1,10 @@
 package ro.fortech.caveatEmptor.integration.entities;
 
+import static ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields.CATEGORIES;
+import static ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields.CATEGORY_ID;
+import static ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields.CATEGORY_NAME;
+import static ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields.PARENT_ID;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +15,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import static ro.fortech.caveatEmptor.integration.entities.fields.CategoryFields.*;
 
 @Entity
 @Table(name = CATEGORIES)
@@ -36,7 +38,7 @@ public class Category {
     @JoinColumn(name = PARENT_ID)
     private Category parent;
 
-    @ManyToMany(mappedBy = "categories")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Item> items;
 
     public Category() {
